@@ -7,8 +7,8 @@ public class JsonFileReader {
     public static void main(String[] args) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            File jsonFile = new File("yourfile.json"); // Replace with your JSON file path
-            YourPojoClass yourData = objectMapper.readValue(jsonFile, YourPojoClass.class);
+            File jsonFile = new File("map.json"); // Replace with your JSON file path
+            World world = objectMapper.readValue(jsonFile, World.class);
 
             // Now you can work with yourData, which is an instance of YourPojoClass
         } catch (Exception e) {

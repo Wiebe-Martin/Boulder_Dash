@@ -4,7 +4,7 @@ public class World {
 
     public int numberRows;
     public int numberColumns;
-
+    public int[][] worldMap;
 
     public World(int numberRows, int numberColumns) {
         this.numberRows = numberRows;
