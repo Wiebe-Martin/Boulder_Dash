@@ -18,8 +18,8 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	@Override
 	public void create() {
-		float viewportWidth = 800; // Change to your desired viewport width
-		float viewportHeight = 600; // Change to your desired viewport height
+		float viewportWidth = 480; // Change to your desired viewport width
+		float viewportHeight = 320; // Change to your desired viewport height
 
 		// Initialize the camera and viewport
 		camera = new OrthographicCamera();
