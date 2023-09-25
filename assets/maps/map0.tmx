@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="32" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="4">
- <tileset firstgid="1" source="sprites/sprites1.tsx"/>
+ <tileset firstgid="1" source="sprites/sprites0.tsx"/>
  <layer id="1" name="background" width="32" height="16">
   <data encoding="csv">
 61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,
