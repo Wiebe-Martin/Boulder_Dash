@@ -28,6 +28,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		// Load your Tiled map
 		tiledMap = new TmxMapLoader().load("map.tmx");
+
 		mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
 		// Set the camera position to center it on the map
