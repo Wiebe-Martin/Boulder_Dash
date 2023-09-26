@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
-public class Entity {
+public abstract class Entity {
     protected Sprite sprite;
     protected Texture texture;
     protected float x, y;
@@ -31,4 +31,6 @@ public class Entity {
         sprite.setPosition(x, y);
         sprite.draw(batch);
     }
+
+    public abstract void update(float deltaTime);
 }

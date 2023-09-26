@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,11 +14,12 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.entities.Player;
 
 public class MyGdxGame extends ApplicationAdapter {
-    private OrthographicCamera camera;
+    OrthographicCamera camera;
     private Viewport viewport;
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer mapRenderer;
     private SpriteBatch batch;
+    Player player;
 
     @Override
     public void create() {
@@ -31,11 +33,16 @@ public class MyGdxGame extends ApplicationAdapter {
         viewport.apply(true);
 
         // Load your Tiled map
-        tiledMap = new TmxMapLoader().load("maps/map0.tmx");
+        tiledMap = new TmxMapLoader().load("maps/map1.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
         // Set the camera position to center it on the map
         camera.position.set(viewportWidth / 2, viewportHeight / 2, 0);
+
+        player = new Player(tiledMap, 5, 5);
+
+        EntityParser x = new EntityParser();
+        x.getEntities(tiledMap);
     }
 
     @Override
@@ -54,7 +61,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
         // Your game rendering logic can go here
         // For example, you can draw other game objects on top of the Tiled map
-        Player player = new Player(tiledMap, 5, 5);
+        player.update(Gdx.graphics.getDeltaTime());
         player.render(batch);
 
         batch.end();

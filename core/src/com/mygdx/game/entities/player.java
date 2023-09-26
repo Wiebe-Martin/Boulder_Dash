@@ -1,5 +1,7 @@
 package com.mygdx.game.entities;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,8 +19,24 @@ public class Player extends Entity{
 
     public void update(float deltaTime) {
         // Implement player-specific update logic here
-        
+        handleInput();
     }
 
+    public void handleInput() {
+        float speed = moveSpeed;
+    
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            x -= speed;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            x += speed;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            y += speed;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            y -= speed;
+        }
+    }
     
 }
