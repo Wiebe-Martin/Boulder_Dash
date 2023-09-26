@@ -2,17 +2,11 @@ package com.mygdx.game;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.mygdx.game.entities.Entity;
-import com.mygdx.game.entities.Player;
 
 public class EntityParser {
     private ArrayList<Entity> entities;
