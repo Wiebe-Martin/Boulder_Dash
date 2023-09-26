@@ -19,7 +19,6 @@ public class Entity {
 
     public Entity(TiledMap map, int startX, int startY) {
         this.map = map;
-        this.sprite = new Sprite(texture);
         this.collisionLayer = (TiledMapTileLayer) map.getLayers().get("collision");
         this.tileX = startX;
         this.tileY = startY;

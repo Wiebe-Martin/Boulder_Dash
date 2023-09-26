@@ -11,7 +11,8 @@ public class Player extends Entity{
 
     public Player(TiledMap map, int startX, int startY) {
         super(map, startX, startY);
-        this.texture = new Texture("textures/player/player_front.png"); // Adjust the player texture
+        this.texture = new Texture("textures/player/player_front.png");
+        this.sprite = new Sprite(texture); // Adjust the player texture
     }
 
     public void update(float deltaTime) {

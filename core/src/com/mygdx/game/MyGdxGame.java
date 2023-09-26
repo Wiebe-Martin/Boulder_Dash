@@ -44,6 +44,7 @@ public class MyGdxGame extends ApplicationAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        batch.begin();
         // Update the camera and mapRenderer
         camera.update();
         mapRenderer.setView(camera);
@@ -55,6 +56,8 @@ public class MyGdxGame extends ApplicationAdapter {
         // For example, you can draw other game objects on top of the Tiled map
         Player player = new Player(tiledMap, 5, 5);
         player.render(batch);
+
+        batch.end();
     }
 
     @Override
