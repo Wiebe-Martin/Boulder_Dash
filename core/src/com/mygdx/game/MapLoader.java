@@ -23,6 +23,8 @@ public class MapLoader {
         this.height = background.getHeight();
         this.tileWidth = background.getTileWidth();
         this.tileHeight = background.getTileHeight();
+
+        //Entity[][] map; 
     }
 
     public int getWidth() {

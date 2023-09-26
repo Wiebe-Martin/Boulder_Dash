@@ -4,23 +4,27 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.entities.Player;
 
 public class MyGdxGame extends ApplicationAdapter {
     private OrthographicCamera camera;
     private Viewport viewport;
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer mapRenderer;
+    private SpriteBatch batch;
 
     @Override
     public void create() {
         float viewportWidth = 800; // Change to your desired viewport width
         float viewportHeight = 600; // Change to your desired viewport height
 
+        batch = new SpriteBatch();
         // Initialize the camera and viewport
         camera = new OrthographicCamera();
         viewport = new FitViewport(viewportWidth, viewportHeight, camera);
@@ -49,6 +53,8 @@ public class MyGdxGame extends ApplicationAdapter {
 
         // Your game rendering logic can go here
         // For example, you can draw other game objects on top of the Tiled map
+        Player player = new Player(tiledMap, 5, 5);
+        player.render(batch);
     }
 
     @Override
