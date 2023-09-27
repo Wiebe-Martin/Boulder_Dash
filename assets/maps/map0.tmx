@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="left-up" width="32" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="8">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="left-up" width="32" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="15">
  <tileset firstgid="1" source="sprites/sprites0.tsx"/>
- <layer id="1" name="background" width="32" height="16">
+ <layer id="1" name="background" width="32" height="16" opacity="0.02">
   <data encoding="csv">
 61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,
 61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,
@@ -41,9 +41,13 @@
 64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64
 </data>
  </layer>
- <objectgroup id="7" name="entities">
-  <object id="5" name="Spawnpoint" x="128.5" y="146.5">
-   <point/>
+ <objectgroup id="7" name="entities" offsetx="0" offsety="-0.952204">
+  <object id="9" gid="1" x="346.79" y="152.165" width="32" height="32">
+   <properties>
+    <property name="tileX" type="int" value="0"/>
+    <property name="tileY" type="int" value="0"/>
+   </properties>
   </object>
+  <object id="14" gid="1" x="127.783" y="128.36" width="32" height="32"/>
  </objectgroup>
 </map>
