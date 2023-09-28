@@ -13,9 +13,12 @@ import com.fasterxml.jackson.databind.deser.std.MapDeserializer;
 import com.mygdx.game.entities.Coin;
 import com.mygdx.game.entities.Entity;
 
+import com.badlogic.gdx.maps.MapLayer;
+
+
 public class EntityParser {
     private ArrayList<Entity> entities;
-    private ClassFactory factory;
+
 
 
     enum entityType{
@@ -25,13 +28,14 @@ public class EntityParser {
     }
     // Player 1; Dirt 72; Coin 101
     public static void getEntities(TiledMap tiledMap) {
-        TiledMapTileLayer tiledLayer = (TiledMapTileLayer) tiledMap.getLayers().get("entities");
-        MapObjects objects = tiledLayer.getObjects();
+        MapLayer layer = tiledMap.getLayers().get("entities");
+        MapObjects objects = layer.getObjects();
+
         for(int i = 0; i < objects.getCount(); i++){
             MapObject object = objects.get(i);
-            System.out.println(objects.get(i).getProperties().get("GID"));
+            System.out.println(objects.get(i).getProperties().get("gid"));
 
-/*
+/*  
             switch(objects.get(i).getProperties().get("GID")){
                 case 72:
                     //dirt erstellen
