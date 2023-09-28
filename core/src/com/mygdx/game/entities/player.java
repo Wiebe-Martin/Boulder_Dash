@@ -47,4 +47,9 @@ public class Player extends Entity{
             this.move(tileX, tileY - 1); // Move down
         }
     }  
+
+    @Override
+    public String toString() {
+        return "Player";
+    }
 }

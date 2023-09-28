@@ -2,37 +2,43 @@ package com.mygdx.game;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.utils.SortedIntList.Iterator;
+import com.fasterxml.jackson.databind.deser.std.MapDeserializer;
+import com.mygdx.game.entities.Coin;
 import com.mygdx.game.entities.Entity;
 
 public class EntityParser {
     private ArrayList<Entity> entities;
-    
-    public void getEntities(TiledMap tiledMap) {
-        TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get("spawnpoints");
-        int width = layer.getWidth();
-        int height = layer.getHeight();
+    private ClassFactory factory;
 
-        for(int i = 0; i < width; i++) {
-            for(int j = 0; j < height; j++) {
-                Cell cell = layer.getCell(i,j);
 
-                if (cell != null) {
-                    TiledMapTile tile = cell.getTile();
-                    // Access custom property
-                    String entityType = (String) tile.getProperties().get("type");
-                    System.out.println(entityType);
-                    // Depending on the entityType, create the corresponding entity
-                    if ("Player".equals(entityType)) {
-                        // Create a player entity
-                        System.out.println(i + "," + j);
-                    }
-                }
+    enum entityType{
+        STONE,
+        DIRT,
+        COIN
+    }
+    // Player 1; Dirt 72; Coin 101
+    public static void getEntities(TiledMap tiledMap) {
+        TiledMapTileLayer tiledLayer = (TiledMapTileLayer) tiledMap.getLayers().get("entities");
+        MapObjects objects = tiledLayer.getObjects();
+        for(int i = 0; i < objects.getCount(); i++){
+            MapObject object = objects.get(i);
+            System.out.println(objects.get(i).getProperties().get("GID"));
+
+/*
+            switch(objects.get(i).getProperties().get("GID")){
+                case 72:
+                    //dirt erstellen
+                break;
+                case 
             }
+*/
         }
-        System.out.println("End");
     }
 }

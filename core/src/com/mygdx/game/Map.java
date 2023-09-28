@@ -17,6 +17,7 @@ public class Map {
         this.mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         this.entities = new ArrayList<Entity>();
     }
+    
     public void removeEntity(Entity entity) {
         entities.remove(entity);
     }
