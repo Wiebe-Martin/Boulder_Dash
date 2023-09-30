@@ -33,7 +33,6 @@ public class EntityParser {
 
         for(int i = 0; i < objects.getCount(); i++){
             MapObject object = objects.get(i);
-            System.out.println(objects.get(i).getProperties().get("gid"));
 
 /*  
             switch(objects.get(i).getProperties().get("GID")){

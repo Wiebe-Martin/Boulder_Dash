@@ -21,8 +21,10 @@ public class Player extends Entity{
 
     public void move(int newTileX, int newTileY) {
         // Check if the new tile coordinates are within the map boundaries
-        if (newTileX >= 0 && newTileX < collisionLayer.getWidth() &&
-            newTileY >= 0 && newTileY < collisionLayer.getHeight()) {
+        Boolean outOfBouds = newTileX >= 0 && newTileX < collisionLayer.getWidth() &&
+                newTileY >= 0 && newTileY < collisionLayer.getHeight();
+        Boolean collision = collisionLayer.getCell(newTileX, newTileY) == null;
+        if (outOfBouds && collision) { // Check if the new tile is empty
     
             this.tileX = newTileX;
             this.tileY = newTileY;
@@ -50,6 +52,6 @@ public class Player extends Entity{
 
     @Override
     public String toString() {
-        return "Player";
+        return "Player at (" + tileX + ", " + tileY + ")";
     }
 }
