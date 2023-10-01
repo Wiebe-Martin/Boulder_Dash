@@ -22,6 +22,7 @@ public class MyGdxGame extends ApplicationAdapter {
     private SpriteBatch batch;
     private AssetManager assetManager;
     Player player;
+    CameraController cameraController;
 
     @Override
     public void create() {
@@ -41,7 +42,10 @@ public class MyGdxGame extends ApplicationAdapter {
         // Set the camera position to center it on the map
         camera.position.set(viewportWidth / 2, viewportHeight / 2, 0);
 
-        player = new Player(tiledMap, 5, 5);
+        player = new Player(tiledMap, 1, 1);
+        cameraController = new CameraController(camera, player, viewport);
+
+        // Load your assets
 
         EntityParser.getEntities(tiledMap);
     }
@@ -54,7 +58,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
         batch.begin();
         // Update the camera and mapRenderer
-        camera.update();
+        cameraController.update();
         mapRenderer.setView(camera);
 
         // Render the Tiled map
@@ -64,6 +68,7 @@ public class MyGdxGame extends ApplicationAdapter {
         // For example, you can draw other game objects on top of the Tiled map
         player.update(Gdx.graphics.getDeltaTime());
         player.render(batch);
+
 
         batch.end();
     }

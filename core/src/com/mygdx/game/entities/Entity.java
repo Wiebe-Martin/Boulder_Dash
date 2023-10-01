@@ -30,5 +30,15 @@ public abstract class Entity {
         sprite.draw(batch);
     }
 
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
     public abstract void update(float deltaTime);
+
+
 }

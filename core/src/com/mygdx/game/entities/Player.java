@@ -21,10 +21,10 @@ public class Player extends Entity{
 
     public void move(int newTileX, int newTileY) {
         // Check if the new tile coordinates are within the map boundaries
-        Boolean outOfBouds = newTileX >= 0 && newTileX < collisionLayer.getWidth() &&
-                newTileY >= 0 && newTileY < collisionLayer.getHeight();
+        Boolean outOfBouds = newTileX >= 0 && newTileX < collisionLayer.getWidth() && newTileY >= 0 && newTileY < collisionLayer.getHeight();
+        // Check if the new tile is empty
         Boolean collision = collisionLayer.getCell(newTileX, newTileY) == null;
-        if (outOfBouds && collision) { // Check if the new tile is empty
+        if (outOfBouds && collision) { // Check if the new tile is empty and within the map boundaries
     
             this.tileX = newTileX;
             this.tileY = newTileY;
@@ -33,6 +33,7 @@ public class Player extends Entity{
             this.x = tileX * collisionLayer.getTileWidth();
             this.y = tileY * collisionLayer.getTileHeight();
         }
+
     }
 
     public void handleInput() {
@@ -48,7 +49,15 @@ public class Player extends Entity{
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             this.move(tileX, tileY - 1); // Move down
         }
-    }  
+    }
+
+    public int getTileX() {
+        return tileX;
+    }
+
+    public int getTileY() {
+        return tileY;
+    }
 
     @Override
     public String toString() {
