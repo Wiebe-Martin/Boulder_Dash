@@ -5,12 +5,6 @@ import java.util.ArrayList;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTile;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
-import com.badlogic.gdx.utils.SortedIntList.Iterator;
-import com.fasterxml.jackson.databind.deser.std.MapDeserializer;
-import com.mygdx.game.entities.Coin;
 import com.mygdx.game.entities.Entity;
 
 import com.badlogic.gdx.maps.MapLayer;
