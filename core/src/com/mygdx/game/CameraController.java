@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.entities.Player;
@@ -8,10 +7,8 @@ import com.mygdx.game.entities.Player;
 
 public class CameraController {
     Camera camera;
-    Player player;
     Viewport viewport;
-    final int SAFEBUFFER = 200;
-
+    
     int animationTime = 0;
     int animationTimeMax = 2;
     boolean animating = false;
@@ -19,14 +16,16 @@ public class CameraController {
     float animationY = 0;
     
 
-    public CameraController(Camera camera, Player player, Viewport viewport) {
+    public CameraController(Camera camera, Viewport viewport) {
         this.camera = camera;
-        this.player = player;
         this.viewport = viewport;
     }
 
-    public void update() {
-        if((player.getX() > camera.position.x + SAFEBUFFER) || (player.getX() < camera.position.x - SAFEBUFFER) || (player.getY() > camera.position.y + SAFEBUFFER) || (player.getY() < camera.position.y - SAFEBUFFER)) {
+    public void update(Player player) {
+        if((player.getX() > camera.position.x + (viewport.getWorldWidth() / 2) - (viewport.getWorldWidth() / 10) || 
+        (player.getX() < camera.position.x - (viewport.getWorldWidth() / 2) + (viewport.getWorldWidth() / 10)) || 
+        (player.getY() > camera.position.y + (viewport.getWorldHeight() / 2) - (viewport.getWorldHeight() / 10)) || 
+        (player.getY() < camera.position.y - (viewport.getWorldHeight() / 2) + (viewport.getWorldHeight() / 10)))) {
             
             animateTo(player.getX(), player.getY());
         }
