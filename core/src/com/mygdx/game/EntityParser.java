@@ -1,41 +1,54 @@
 package com.mygdx.game;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.mygdx.game.entities.Entity;
-
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.mygdx.game.entities.*;
 import com.badlogic.gdx.maps.MapLayer;
 
 
 public class EntityParser {
-    private ArrayList<Entity> entities;
 
+    public static Entity[][] getEntities(TiledMap tiledMap) {
+        TiledMapTileLayer layer = (TiledMapTileLayer)tiledMap.getLayers().get(0);
 
+        MapLayer entitiesLayer = tiledMap.getLayers().get("entities");
 
-    enum entityType{
-        STONE,
-        DIRT,
-        COIN
-    }
-    // Player 1; Dirt 72; Coin 101
-    public static void getEntities(TiledMap tiledMap) {
-        MapLayer layer = tiledMap.getLayers().get("entities");
-        MapObjects objects = layer.getObjects();
+        Entity[][] entities = new Entity[layer.getWidth()][layer.getHeight()];
 
-        for(int i = 0; i < objects.getCount(); i++){
+        MapObjects objects = entitiesLayer.getObjects();
+
+        for(int i = 0; i < objects.getCount(); i++) {
             MapObject object = objects.get(i);
 
-/*  
-            switch(objects.get(i).getProperties().get("GID")){
+            float xFloat = (Float) object.getProperties().get("x");
+            float yFloat = (Float) object.getProperties().get("y");
+
+            int x = (int) (xFloat / 32);
+            int y = (int) (yFloat / 32);
+
+            int gid = (Integer) object.getProperties().get("gid");
+
+            switch (gid) {
+                case 1:
+                    Player player = new Player(tiledMap, x, y);
+                    entities[x][y] = player;
+                    break;
                 case 72:
-                    //dirt erstellen
-                break;
-                case 
+                    Dirt dirt = new Dirt(tiledMap, x, y);
+                    entities[x][y] = dirt;
+                    break;   
+                case 101:
+                    Coin coin = new Coin(tiledMap, x, y);
+                    entities[x][y] = coin;
+                    break;
+                default:
+                    Entity entity = new Entity(tiledMap, x, y);
+                    break;
             }
-*/
         }
+
+        return entities;
     }
 }

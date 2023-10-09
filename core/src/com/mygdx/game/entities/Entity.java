@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
-public abstract class Entity {
+public class Entity {
     protected Sprite sprite;
     protected Texture texture;
     protected float x, y;
@@ -23,6 +23,8 @@ public abstract class Entity {
 
         this.x = tileX * collisionLayer.getTileWidth();
         this.y = tileY * collisionLayer.getTileHeight();
+
+        this.texture = new Texture("textures/default.png");
     }
 
     public void render(SpriteBatch batch) {
@@ -38,7 +40,7 @@ public abstract class Entity {
         return y;
     }
 
-    public abstract void update(float deltaTime);
+    public void update(float deltaTime) {
 
-
+    };
 }
