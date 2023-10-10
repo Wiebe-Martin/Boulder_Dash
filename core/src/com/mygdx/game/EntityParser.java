@@ -45,6 +45,7 @@ public class EntityParser {
                     break;
                 default:
                     Entity entity = new Entity(tiledMap, x, y);
+                    entities[x][y] = entity;
                     break;
             }
         }
