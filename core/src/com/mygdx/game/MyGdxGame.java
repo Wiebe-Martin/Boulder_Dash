@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -16,6 +17,7 @@ public class MyGdxGame extends ApplicationAdapter {
     private TiledMap tiledMap;
     private SpriteBatch batch;
     private Map map;
+    private BitmapFont font;
 
     @Override
     public void create() {
@@ -33,6 +35,8 @@ public class MyGdxGame extends ApplicationAdapter {
         tiledMap = new TmxMapLoader().load("maps/map1.tmx");
 
         map = new Map(tiledMap, camera, viewport);
+
+        font = new BitmapFont();
     }
 
     @Override
@@ -45,6 +49,8 @@ public class MyGdxGame extends ApplicationAdapter {
 
         map.render(batch);
        
+        font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
+
         batch.end();
     }
 

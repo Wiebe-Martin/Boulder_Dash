@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.mygdx.game.GameTextures;
 
 public class Entity {
     protected Sprite sprite;
@@ -24,7 +25,7 @@ public class Entity {
         this.x = tileX * collisionLayer.getTileWidth();
         this.y = tileY * collisionLayer.getTileHeight();
 
-        this.texture = new Texture("textures/default.png");
+        this.texture = GameTextures.getTexture(this);
     }
 
     public void render(SpriteBatch batch) {

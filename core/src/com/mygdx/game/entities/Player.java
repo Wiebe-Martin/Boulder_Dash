@@ -15,7 +15,7 @@ public class Player extends Entity{
 
     public Player(TiledMap map, int startX, int startY) {
         super(map, startX, startY);
-        this.texture = new Texture("textures/player/player_front.png");
+        //this.texture = new Texture("textures/player/player_front.png");
         this.sprite = new Sprite(texture);
         this.playerInputProcessor = new PlayerInputProcessor();
         

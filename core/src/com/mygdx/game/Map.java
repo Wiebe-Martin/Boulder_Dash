@@ -18,7 +18,7 @@ public class Map {
 
     public Map(TiledMap tiledMap, OrthographicCamera camera, Viewport viewport) {
         this.mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
-        this.entities = EntityParser.getEntities(tiledMap);
+        this.entities = EntityFactory.getEntities(tiledMap);
         this.camera = camera;
         this.cameraController = new CameraController(camera, viewport);
         this.getPlayer();
