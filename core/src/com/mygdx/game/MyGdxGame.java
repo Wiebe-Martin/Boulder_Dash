@@ -32,7 +32,7 @@ public class MyGdxGame extends ApplicationAdapter {
         viewport.apply(true);
     
         // Load your Tiled map
-        tiledMap = new TmxMapLoader().load("maps/map1.tmx");
+        tiledMap = new TmxMapLoader().load("maps/map2.tmx");
 
         map = new Map(tiledMap, camera, viewport);
 

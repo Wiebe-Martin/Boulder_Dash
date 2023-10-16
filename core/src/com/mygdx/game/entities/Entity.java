@@ -14,18 +14,20 @@ public class Entity {
     protected int tileX, tileY;
     protected TiledMap map;
     protected TiledMapTileLayer collisionLayer;
+    protected TiledMapTileLayer dirtLayer;
     protected float moveSpeed;
 
     public Entity(TiledMap map, int startX, int startY) {
         this.map = map;
         this.collisionLayer = (TiledMapTileLayer) map.getLayers().get("collision");
+        this.dirtLayer = (TiledMapTileLayer) map.getLayers().get("dirt");
         this.tileX = startX;
         this.tileY = startY;
 
         this.x = tileX * collisionLayer.getTileWidth();
         this.y = tileY * collisionLayer.getTileHeight();
 
-        this.texture = GameTextures.getTexture(this);
+        //this.texture = GameTextures.getTexture(this);
     }
 
     public void render(SpriteBatch batch) {

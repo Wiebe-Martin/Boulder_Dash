@@ -15,7 +15,7 @@ public class Player extends Entity{
 
     public Player(TiledMap map, int startX, int startY) {
         super(map, startX, startY);
-        //this.texture = new Texture("textures/player/player_front.png");
+        this.texture = new Texture("textures/entities/player/player.png");
         this.sprite = new Sprite(texture);
         this.playerInputProcessor = new PlayerInputProcessor();
         
@@ -36,9 +36,19 @@ public class Player extends Entity{
         
             this.x = tileX * collisionLayer.getTileWidth();
             this.y = tileY * collisionLayer.getTileHeight();
-        } 
+        }
+        
+        handelCollison();
     }
-            
+     
+    public void handelCollison() {
+        Boolean collision = collisionLayer.getCell(tileX, tileY) == null;
+        if (collision) {
+            // Modify the map data (e.g., set the tile to null or update properties)
+            dirtLayer.setCell(tileX, tileY, null);
+        }
+    }
+
     public void handleInput() {
         if(cooldown > 0) {
             cooldown--;

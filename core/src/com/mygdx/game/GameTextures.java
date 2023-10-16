@@ -26,7 +26,7 @@ public class GameTextures {
         return texture;
     }
     */
-    
+    /* 
     public static Texture getTexture(Entity entity) {
         Texture tiles = new Texture(Gdx.files.internal("maps/sprites/sprites.png"));
         TextureRegion[][] splitTiles = TextureRegion.split(tiles, 32, 32);
@@ -52,5 +52,5 @@ public class GameTextures {
 
         return texture;
     }
-    
+    */
 }

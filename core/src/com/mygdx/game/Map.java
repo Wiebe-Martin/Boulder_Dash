@@ -40,6 +40,7 @@ public class Map {
             for (int j = 0; j < entities[i].length; j++) {
                 Entity entity = entities[i][j];
                 if (entity != null) {
+                    entity.update(Gdx.graphics.getDeltaTime());
                     entity.render(batch);
                 }
             }

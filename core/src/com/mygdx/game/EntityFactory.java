@@ -17,7 +17,7 @@ public class EntityFactory {
     static {
         // Define entity mappings here
         entityMap.put(1, Player.class);
-        entityMap.put(72, Dirt.class);
+        entityMap.put(71, Stone.class);
         entityMap.put(101, Coin.class);
     }
 
