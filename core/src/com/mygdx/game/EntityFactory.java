@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.mygdx.game.entities.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.badlogic.gdx.maps.MapLayer;
@@ -22,42 +23,40 @@ public class EntityFactory {
     }
 
 
-    public static Entity[][] getEntities(TiledMap tiledMap) {
-        TiledMapTileLayer layer = (TiledMapTileLayer)tiledMap.getLayers().get(0);
-
+    public static ArrayList<Entity> getEntities(TiledMap tiledMap) {
         MapLayer entitiesLayer = tiledMap.getLayers().get("entities");
-
-        Entity[][] entities = new Entity[layer.getWidth()][layer.getHeight()];
-
+    
+        ArrayList<Entity> entitiesList = new ArrayList<>();
+    
         MapObjects objects = entitiesLayer.getObjects();
-
-        for(int i = 0; i < objects.getCount(); i++) {
+    
+        for (int i = 0; i < objects.getCount(); i++) {
             MapObject object = objects.get(i);
-
+    
             float xFloat = (Float) object.getProperties().get("x");
             float yFloat = (Float) object.getProperties().get("y");
-
+    
             int x = (int) (xFloat / 32);
             int y = (int) (yFloat / 32);
-
+    
             int gid = (Integer) object.getProperties().get("gid");
-
+    
             // Determine the entity class based on gid
             Class<? extends Entity> entityClass = getEntityClass(gid);
-
+    
             try {
-                // Create an instance of the entity and store it in the entities array
+                // Create an instance of the entity and add it to the ArrayList
                 Entity entity = entityClass.getConstructor(TiledMap.class, int.class, int.class).newInstance(tiledMap, x, y);
-                entities[x][y] = entity;
+                entitiesList.add(entity);
             } catch (Exception e) {
                 // Handle any exceptions (e.g., if the class or constructor doesn't exist)
                 e.printStackTrace();
             }
         }
-
-        return entities;
+    
+        return entitiesList;
     }
-
+    
     public static Class<? extends Entity> getEntityClass(int gid) {
         return entityMap.getOrDefault(gid, Entity.class);
     }

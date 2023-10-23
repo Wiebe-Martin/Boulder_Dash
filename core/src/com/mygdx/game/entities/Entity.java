@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.mygdx.game.GameTextures;
+
 
 public class Entity {
     protected Sprite sprite;
@@ -26,8 +26,6 @@ public class Entity {
 
         this.x = tileX * collisionLayer.getTileWidth();
         this.y = tileY * collisionLayer.getTileHeight();
-
-        //this.texture = GameTextures.getTexture(this);
     }
 
     public void render(SpriteBatch batch) {
@@ -43,7 +41,20 @@ public class Entity {
         return y;
     }
 
+    
+    public int getTileX() {
+        return tileX;
+    }
+
+    public int getTileY() {
+        return tileY;
+    }
+
     public void update(float deltaTime) {
 
+    }
+
+    public void handleCollison() {
+        System.out.println(getTileX() + "/" + getTileY());
     };
 }

@@ -19,19 +19,19 @@ public class MyGdxGame extends ApplicationAdapter {
     private Map map;
     private BitmapFont font;
 
-    int viewportWidth = 640; // Change to your desired viewport width
+    int viewportWidth = 640; // Ändere die gewünschte Viewport-Breite
     int viewportHeight = 360;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
-        // Initialize the camera and viewport
+        // Initialisiere Kamera und Viewport
         camera = new OrthographicCamera();
         viewport = new FitViewport(viewportWidth, viewportHeight, camera);
         
         viewport.apply(true);
     
-        // Load your Tiled map
+        // Lade die Tiled-Map
         tiledMap = new TmxMapLoader().load("maps/map2.tmx");
 
         map = new Map(tiledMap, camera, viewport);
@@ -42,7 +42,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
     @Override
     public void render() {
-        // Clear the screen
+        // Lösche den Bildschirm
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -50,10 +50,10 @@ public class MyGdxGame extends ApplicationAdapter {
 
         map.render(batch);
        
-        // Set the projection matrix to the batch
+        // Setze die Projektionsmatrix auf den Batch
         batch.setProjectionMatrix(camera.combined);
 
-        // Calculate the position for the FPS counter based on camera position
+        // Berechne die Position für den FPS-Zähler basierend auf der Kameraposition
         float fpsX = camera.position.x - viewportWidth / 2 + 10;
         float fpsY = camera.position.y + viewportHeight / 2 - 10;
 
@@ -69,7 +69,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
     @Override
     public void dispose() {
-        // Dispose of resources when the game is closed
+        // Gib Ressourcen frei, wenn das Spiel beendet wird
         tiledMap.dispose();
         batch.dispose();
         font.dispose();

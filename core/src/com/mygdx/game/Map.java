@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,10 +13,13 @@ import com.mygdx.game.entities.Player;
 
 public class Map {
     private OrthogonalTiledMapRenderer mapRenderer;
-    private Entity entities[][];
-    private Player player;
     private CameraController cameraController;
     private OrthographicCamera camera;
+
+    private ArrayList<Entity> entities;
+    private Player player;
+
+    
 
     public Map(TiledMap tiledMap, OrthographicCamera camera, Viewport viewport) {
         this.mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
@@ -24,10 +29,6 @@ public class Map {
         this.getPlayer();
     }
     
-    public void removeEntity(int x, int y) {
-        entities[x][y] = null;
-    }
-
     public void render(SpriteBatch batch) {
         // Set the view of the mapRenderer to the camera
         mapRenderer.setView(camera);
@@ -36,14 +37,20 @@ public class Map {
         mapRenderer.render();
 
         // Render all entities
-        for (int i = 0; i < entities.length; i++) {
-            for (int j = 0; j < entities[i].length; j++) {
-                Entity entity = entities[i][j];
-                if (entity != null) {
-                    entity.update(Gdx.graphics.getDeltaTime());
-                    entity.render(batch);
+        for (Entity entity : entities) {
+            
+            
+            if (entity != null) {
+                entity.update(Gdx.graphics.getDeltaTime());
+                entity.render(batch);
+
+                if(entity.getTileX() == player.getTileX() && entity.getTileY() == player.getTileY()) {
+                    entity.handleCollison();
+                    
                 }
+                
             }
+        
         }
         
         player.update(Gdx.graphics.getDeltaTime());
@@ -51,34 +58,20 @@ public class Map {
 
         cameraController.update(player);
 
-        handelCollison();
+
     }
 
     public void getPlayer() {
-        for (int i = 0; i < entities.length; i++) {
-            for (int j = 0; j < entities[i].length; j++) {
-                Entity entity = entities[i][j];
-
-                if (entity != null) {
-                    if(entity instanceof Player) {
-                        player = (Player) entity;
-                        removeEntity(i, j);
-                        return;
-                    }
-                }
+        for (Entity entity : entities) {
+            if (entity instanceof Player) {
+                player = (Player) entity;
+                entities.remove(player);
+                return;
             }
         }
     }
-
-    public void handelCollison() {
-        int playerX = player.getTileX();
-        int playerY = player.getTileY();
-
-        if(entities[playerX][playerY] != null) {
-            removeEntity(playerX, playerY);
-        }
-    }
-
+    
+    
     public void dispose() {
         mapRenderer.dispose();
     }
