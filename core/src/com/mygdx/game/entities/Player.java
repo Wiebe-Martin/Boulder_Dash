@@ -9,8 +9,11 @@ import com.mygdx.game.PlayerInputProcessor;
 public class Player extends Entity{
     PlayerInputProcessor playerInputProcessor;
     
-    private int moveSpeed = 3;        
+    private int coins;
 
+    private boolean alive;
+
+    private int moveSpeed = 3;        
     private int cooldown = 0;
 
     public Player(TiledMap map, int startX, int startY) {

@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 
 public class Stone extends Entity{
+    private int moveSpeed = 12;        
+    private int cooldown = 0;
 
     public Stone(TiledMap map, int startX, int startY) {
         super(map, startX, startY);
@@ -14,7 +16,7 @@ public class Stone extends Entity{
 
     @Override
     public void update(float deltaTime) {
-        handelCollison();
+        handleCollision();
     }
 
     public void move(int newTileX, int newTileY) {
@@ -29,13 +31,25 @@ public class Stone extends Entity{
         }
     }
 
-    public void handelCollison() {
-        System.out.println("check");
-        boolean isFalling = collisionLayer.getCell(tileX, tileY - 1) == null && dirtLayer.getCell(tileX, tileY - 1) == null;
-        if(isFalling) {
+    public void handleCollision() {
+        boolean canFall = isAir(tileX, tileY - 1) && isAir(tileX, tileY - 1);
+        
+        if (!canFall) {
+            cooldown = moveSpeed;
+            return;
+        }
+    
+        if (cooldown > 0) {
+            cooldown--;
+        } else {
             move(tileX, tileY - 1);
         }
     }
+    
+    private boolean isAir(int x, int y) {
+        return collisionLayer.getCell(x, y) == null && dirtLayer.getCell(x, y) == null;
+    }
+    
 
     @Override
     public String toString() {

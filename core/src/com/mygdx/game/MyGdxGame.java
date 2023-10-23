@@ -19,11 +19,11 @@ public class MyGdxGame extends ApplicationAdapter {
     private Map map;
     private BitmapFont font;
 
+    int viewportWidth = 640; // Change to your desired viewport width
+    int viewportHeight = 360;
+
     @Override
     public void create() {
-        int viewportWidth = 640; // Change to your desired viewport width
-        int viewportHeight = 360; // Change to your desired viewport height
-
         batch = new SpriteBatch();
         // Initialize the camera and viewport
         camera = new OrthographicCamera();
@@ -37,6 +37,7 @@ public class MyGdxGame extends ApplicationAdapter {
         map = new Map(tiledMap, camera, viewport);
 
         font = new BitmapFont();
+        font.setColor(0, 255, 0, 255);
     }
 
     @Override
@@ -49,7 +50,14 @@ public class MyGdxGame extends ApplicationAdapter {
 
         map.render(batch);
        
-        font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
+        // Set the projection matrix to the batch
+        batch.setProjectionMatrix(camera.combined);
+
+        // Calculate the position for the FPS counter based on camera position
+        float fpsX = camera.position.x - viewportWidth / 2 + 10;
+        float fpsY = camera.position.y + viewportHeight / 2 - 10;
+
+        font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), fpsX, fpsY);
 
         batch.end();
     }
@@ -63,5 +71,7 @@ public class MyGdxGame extends ApplicationAdapter {
     public void dispose() {
         // Dispose of resources when the game is closed
         tiledMap.dispose();
+        batch.dispose();
+        font.dispose();
     }
 }
