@@ -20,9 +20,9 @@ public class Stone extends Entity{
     }
 
     public void move(int newTileX, int newTileY) {
-        Boolean outOfBouds = newTileX >= 0 && newTileX < collisionLayer.getWidth() && newTileY >= 0 && newTileY < collisionLayer.getHeight();
+        boolean outOfBounds = newTileX >= 0 && newTileX < collisionLayer.getWidth() && newTileY >= 0 && newTileY < collisionLayer.getHeight();
         
-        if (outOfBouds) {
+        if (outOfBounds) {
             this.tileX = newTileX;
             this.tileY = newTileY;
         

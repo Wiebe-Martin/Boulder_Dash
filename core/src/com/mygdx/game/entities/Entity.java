@@ -5,12 +5,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.mygdx.game.GameTextures;
 
 public class Entity {
     protected Sprite sprite;
     protected Texture texture;
     protected float x, y;
+
     protected int tileX, tileY;
     protected TiledMap map;
     protected TiledMapTileLayer collisionLayer;
@@ -41,6 +41,14 @@ public class Entity {
 
     public float getY() {
         return y;
+    }
+
+    public int getTileX() {
+        return tileX;
+    }
+
+    public int getTileY() {
+        return tileY;
     }
 
     public void update(float deltaTime) {

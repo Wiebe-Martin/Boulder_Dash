@@ -8,6 +8,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.entities.Entity;
 import com.mygdx.game.entities.Player;
+import com.mygdx.game.rendering.CameraController;
+import com.mygdx.game.rendering.EntityFactory;
 
 public class Map {
     private OrthogonalTiledMapRenderer mapRenderer;
@@ -36,9 +38,8 @@ public class Map {
         mapRenderer.render();
 
         // Render all entities
-        for (int i = 0; i < entities.length; i++) {
-            for (int j = 0; j < entities[i].length; j++) {
-                Entity entity = entities[i][j];
+        for (Entity[] value : entities) {
+            for (Entity entity : value) {
                 if (entity != null) {
                     entity.update(Gdx.graphics.getDeltaTime());
                     entity.render(batch);
@@ -51,7 +52,7 @@ public class Map {
 
         cameraController.update(player);
 
-        handelCollison();
+        handelCollision();
     }
 
     public void getPlayer() {
@@ -70,7 +71,7 @@ public class Map {
         }
     }
 
-    public void handelCollison() {
+    public void handelCollision() {
         int playerX = player.getTileX();
         int playerY = player.getTileY();
 
