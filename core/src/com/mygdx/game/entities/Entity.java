@@ -11,6 +11,7 @@ public class Entity {
     protected Sprite sprite;
     protected Texture texture;
     protected float x, y;
+
     protected int tileX, tileY;
     protected TiledMap map;
     protected TiledMapTileLayer collisionLayer;
@@ -41,7 +42,6 @@ public class Entity {
         return y;
     }
 
-    
     public int getTileX() {
         return tileX;
     }

@@ -4,16 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.mygdx.game.PlayerInputProcessor;
+import com.mygdx.game.utils.PlayerInputProcessor;
 
 public class Player extends Entity{
     PlayerInputProcessor playerInputProcessor;
     
-    private int coins;
-
-    private boolean alive;
-
     private int moveSpeed = 3;        
+
     private int cooldown = 0;
 
     public Player(TiledMap map, int startX, int startY) {
@@ -45,7 +42,7 @@ public class Player extends Entity{
     }
      
     public void handelCollison() {
-        Boolean collision = collisionLayer.getCell(tileX, tileY) == null;
+        boolean collision = collisionLayer.getCell(tileX, tileY) == null;
         if (collision) {
             // Modify the map data (e.g., set the tile to null or update properties)
             dirtLayer.setCell(tileX, tileY, null);
@@ -72,14 +69,6 @@ public class Player extends Entity{
             if(playerInputProcessor.isLeft() || playerInputProcessor.isRight() || playerInputProcessor.isUp() || playerInputProcessor.isDown()) {
                 cooldown = moveSpeed;
             } 
-    }
-
-    public int getTileX() {
-        return tileX;
-    }
-
-    public int getTileY() {
-        return tileY;
     }
 
     @Override
