@@ -3,7 +3,6 @@ package com.mygdx.game.rendering;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.mygdx.game.entities.*;
 
 import java.util.ArrayList;
