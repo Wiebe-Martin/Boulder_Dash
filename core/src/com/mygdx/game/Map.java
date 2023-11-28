@@ -40,8 +40,6 @@ public class Map {
 
         // Render all entities
         for (Entity entity : entities) {
-            
-            
             if (entity != null) {
                 entity.update(Gdx.graphics.getDeltaTime());
                 entity.render(batch);
@@ -49,9 +47,9 @@ public class Map {
                 if(entity.getTileX() == player.getTileX() && entity.getTileY() == player.getTileY()) {
                     entity.handleCollison();
                 }
-            }       
+            }
         }
-    
+
         player.update(Gdx.graphics.getDeltaTime());
         player.render(batch);
 
