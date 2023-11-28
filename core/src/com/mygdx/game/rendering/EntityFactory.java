@@ -45,7 +45,7 @@ public class EntityFactory {
     
             try {
                 // Create an instance of the entity and add it to the ArrayList
-                Entity entity = entityClass.getConstructor(TiledMap.class, int.class, int.class).newInstance(tiledMap, x, y);
+                Entity entity = entityClass.getConstructor(TiledMap.class, Integer.TYPE, Integer.TYPE).newInstance(tiledMap, x, y);
                 entitiesList.add(entity);
             } catch (Exception e) {
                 // Handle any exceptions (e.g., if the class or constructor doesn't exist)
@@ -56,9 +56,10 @@ public class EntityFactory {
         return entitiesList;
     }
     
-    public static Class<? extends Entity> getEntityClass(int gid) {
-        return entityMap.getOrDefault(gid, Entity.class);
+    public static Class<Entity> getEntityClass(int gid) {
+    return (Class<Entity>) entityMap.getOrDefault(gid, Entity.class);
     }
+
 
     public static Integer getGidForEntity(Class<? extends Entity> entityClass) {
         for (HashMap.Entry<Integer, Class<? extends Entity>> entry : entityMap.entrySet()) {

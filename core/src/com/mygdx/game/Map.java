@@ -12,6 +12,7 @@ import com.mygdx.game.entities.Entity;
 import com.mygdx.game.entities.Player;
 import com.mygdx.game.rendering.CameraController;
 import com.mygdx.game.rendering.EntityFactory;
+import com.mygdx.game.rendering.EntityFactoryTest;
 
 public class Map {
     private OrthogonalTiledMapRenderer mapRenderer;
@@ -25,7 +26,7 @@ public class Map {
 
     public Map(TiledMap tiledMap, OrthographicCamera camera, Viewport viewport) {
         this.mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
-        this.entities = EntityFactory.getEntities(tiledMap);
+        this.entities = EntityFactoryTest.createEntities(tiledMap);
         this.camera = camera;
         this.cameraController = new CameraController(camera, viewport);
         this.getPlayer();
