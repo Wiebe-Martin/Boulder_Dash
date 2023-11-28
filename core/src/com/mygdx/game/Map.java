@@ -48,23 +48,14 @@ public class Map {
 
                 if(entity.getTileX() == player.getTileX() && entity.getTileY() == player.getTileY()) {
                     entity.handleCollison();
-                    
-        for (Entity[] value : entities) {
-            for (Entity entity : value) {
-                if (entity != null) {
-                    entity.update(Gdx.graphics.getDeltaTime());
-                    entity.render(batch);
                 }
-                
-            }
-        
+            }       
         }
-        
+    
         player.update(Gdx.graphics.getDeltaTime());
         player.render(batch);
 
         cameraController.update(player);
-
     }
 
     public void getPlayer() {
