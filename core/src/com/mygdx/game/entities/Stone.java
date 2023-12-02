@@ -1,22 +1,17 @@
 package com.mygdx.game.entities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.utils.AnimationPath;
-import com.mygdx.game.utils.AnimationPoint;
+
 
 import java.util.ArrayList;
 
 public class Stone extends Entity {
-    private int moveSpeedDown = 60;
-    private int moveSpeedSide = 120;
+    private int moveSpeedDown = 10;
+    private int moveSpeedSide = 20;
 
     private int cooldown = 0;
-    private int fallingduration;
-    private ArrayList<Entity> entities;
 
     public Stone(TiledMap map, int startX, int startY) {
         super(map, startX, startY);
@@ -32,23 +27,26 @@ public class Stone extends Entity {
     }
 
     public void handleCollision() {
-        boolean canFallLeft = isAir(tileX - 1, tileY) && isAir(tileX - 1, tileY - 1) && !isStone(tileX, tileY - 1);
-        boolean canFallRight = isAir(tileX + 1, tileY) && isAir(tileX + 1, tileY - 1) && !isStone(tileX, tileY - 1);
+        boolean canFallLeft = isAir(tileX - 1, tileY) && isAir(tileX - 1, tileY - 1) && isStone(tileX , tileY - 1);
+        boolean canFallRight = isAir(tileX + 1, tileY) && isAir(tileX + 1, tileY - 1)&& isStone(tileX , tileY - 1);
         boolean canFallDown = isAir(tileX, tileY - 1) && !isStone(tileX, tileY - 1);
-        boolean canFall = canFallLeft || canFallRight || canFallDown;
+        //boolean canFall = canFallLeft || canFallRight || canFallDown;
 
-        if (!canFall && cooldown <= 0) {
-            cooldown = 0;
-
+        if (cooldown > 0) {
+            cooldown--;
+            return;
         }
 
-        if (canFallLeft) {
+        if (canFallDown) {
+            move(tileX, tileY - 1);
+            cooldown = moveSpeedDown;
+        } else if (canFallLeft) {
             move(tileX - 1, tileY - 1);
+            cooldown = moveSpeedSide;
         } else if (canFallRight) {
             move(tileX + 1, tileY - 1);
-        } else if (canFallDown) {
-            move(tileX, tileY - 1);
-        }
+            cooldown = moveSpeedSide;
+        } 
         cooldown--;
 
     }
@@ -64,23 +62,6 @@ public class Stone extends Entity {
             this.x = tileX * collisionLayer.getTileWidth();
             this.y = tileY * collisionLayer.getTileHeight();
         }
-
-    }
-
-    private boolean isAir(int x, int y) {
-        return collisionLayer.getCell(x, y) == null && dirtLayer.getCell(x, y) == null;
-    }
-
-    private boolean isStone(int x, int y) {
-        for (Entity entity : entities) {
-            if (entity instanceof Stone) {
-                System.out.println("Stone found");
-                if (entity.getTileX() == x && entity.getTileY() == y) {
-                    return true;
-                }
-            }
-        }
-        return false;
 
     }
 

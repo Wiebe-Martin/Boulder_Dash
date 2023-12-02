@@ -37,7 +37,7 @@ public class MyGdxGame extends ApplicationAdapter {
         map = new Map(tiledMap, camera, viewport);
 
         font = new BitmapFont();
-        font.setColor(0, 255, 0, 255);
+        font.setColor(255, 255, 255, 255);
     }
 
     @Override
@@ -48,11 +48,10 @@ public class MyGdxGame extends ApplicationAdapter {
 
         batch.begin();
 
-        map.render(batch);
-
         // Setze die Projektionsmatrix auf den Batch
         batch.setProjectionMatrix(camera.combined);
 
+        map.render(batch, camera, viewportWidth, viewportHeight);
         // Berechne die Position für den FPS-Zähler basierend auf der Kameraposition
         float fpsX = camera.position.x - viewportWidth / 2 + 10;
         float fpsY = camera.position.y + viewportHeight / 2 - 10;
