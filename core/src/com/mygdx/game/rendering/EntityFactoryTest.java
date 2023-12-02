@@ -13,7 +13,7 @@ public class EntityFactoryTest {
     private static HashMap<Integer, EntityFactoryFunction> entityFactoryMap = new HashMap<>();
 
     static {
-        // Define entity factory functions here
+        // hier werden die gid's den jeweiligen Klassen zugeordnet
         entityFactoryMap.put(1, Player::new);
         entityFactoryMap.put(71, Stone::new);
         entityFactoryMap.put(101, Coin::new);
