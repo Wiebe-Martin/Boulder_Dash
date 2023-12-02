@@ -17,7 +17,6 @@ public class Stone extends Entity {
     private int cooldown = 0;
     private int fallingduration;
     private ArrayList<Entity> entities;
-    private AnimationPath animationPath = new AnimationPath();
 
     public Stone(TiledMap map, int startX, int startY) {
         super(map, startX, startY);
@@ -33,12 +32,12 @@ public class Stone extends Entity {
     }
 
     public void handleCollision() {
-        boolean canFallLeft = isAir(tileX - 1, tileY) && isAir(tileX - 1, tileY - 1) && isStone(tileX, tileY - 1);
-        boolean canFallRight = isAir(tileX + 1, tileY) && isAir(tileX + 1, tileY - 1) && isStone(tileX, tileY - 1);
-        boolean canFallDown = isAir(tileX, tileY - 1) && isStone(tileX, tileY - 1);
+        boolean canFallLeft = isAir(tileX - 1, tileY) && isAir(tileX - 1, tileY - 1) && !isStone(tileX, tileY - 1);
+        boolean canFallRight = isAir(tileX + 1, tileY) && isAir(tileX + 1, tileY - 1) && !isStone(tileX, tileY - 1);
+        boolean canFallDown = isAir(tileX, tileY - 1) && !isStone(tileX, tileY - 1);
         boolean canFall = canFallLeft || canFallRight || canFallDown;
 
-        if (!canFall) {
+        if (!canFall && cooldown <= 0) {
             cooldown = 0;
 
         }
@@ -50,6 +49,7 @@ public class Stone extends Entity {
         } else if (canFallDown) {
             move(tileX, tileY - 1);
         }
+        cooldown--;
 
     }
 
