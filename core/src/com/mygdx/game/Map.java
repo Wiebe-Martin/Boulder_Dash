@@ -42,7 +42,7 @@ public class Map {
         // Render all entities
         for (Entity entity : entities) {
             if (entity != null) {
-                entity.update(Gdx.graphics.getDeltaTime());
+                entity.update(Gdx.graphics.getDeltaTime(), entities);
                 entity.render(batch);
 
                 if(entity.getTileX() == player.getTileX() && entity.getTileY() == player.getTileY()) {

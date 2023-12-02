@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-
+import java.util.ArrayList;
 
 public class Entity {
     protected Sprite sprite;
@@ -50,7 +50,7 @@ public class Entity {
         return tileY;
     }
 
-    public void update(float deltaTime) {
+    public void update(float deltaTime, ArrayList<Entity> entities) {
 
     }
 

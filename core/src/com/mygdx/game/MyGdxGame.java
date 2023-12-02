@@ -28,9 +28,9 @@ public class MyGdxGame extends ApplicationAdapter {
         // Initialisiere Kamera und Viewport
         camera = new OrthographicCamera();
         viewport = new FitViewport(viewportWidth, viewportHeight, camera);
-        
+
         viewport.apply(true);
-    
+
         // Lade die Tiled-Map
         tiledMap = new TmxMapLoader().load("maps/map2.tmx");
 
@@ -49,7 +49,7 @@ public class MyGdxGame extends ApplicationAdapter {
         batch.begin();
 
         map.render(batch);
-       
+
         // Setze die Projektionsmatrix auf den Batch
         batch.setProjectionMatrix(camera.combined);
 

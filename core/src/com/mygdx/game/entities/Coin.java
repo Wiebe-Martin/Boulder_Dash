@@ -3,6 +3,8 @@ package com.mygdx.game.entities;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.utils.Array;
+import java.util.ArrayList;
 
 public class Coin extends Entity{
 
@@ -12,9 +14,7 @@ public class Coin extends Entity{
         this.sprite = new Sprite(texture);
     }
 
-    @Override
-    public void update(float deltaTime) {
-    }
+   
 
     @Override
     public String toString() {
