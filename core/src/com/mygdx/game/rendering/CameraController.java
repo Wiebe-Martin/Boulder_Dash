@@ -23,17 +23,20 @@ public class CameraController {
     // Update-Methode
     public void update(Player player) {
         // Überprüfe, ob sich der Spieler außerhalb des Kamerabereichs befindet
-        if((player.getX() > camera.position.x + (viewport.getWorldWidth() / 2) - (viewport.getWorldWidth() / 10) || 
-        (player.getX() < camera.position.x - (viewport.getWorldWidth() / 2) + (viewport.getWorldWidth() / 10)) || 
-        (player.getY() > camera.position.y + (viewport.getWorldHeight() / 2) - (viewport.getWorldHeight() / 10)) || 
-        (player.getY() < camera.position.y - (viewport.getWorldHeight() / 2) + (viewport.getWorldHeight() / 10)))) {
-            
+        if ((player.getX() > camera.position.x + (viewport.getWorldWidth() / 2) - (viewport.getWorldWidth() / 10) ||
+                (player.getX() < camera.position.x - (viewport.getWorldWidth() / 2) + (viewport.getWorldWidth() / 10))
+                ||
+                (player.getY() > camera.position.y + (viewport.getWorldHeight() / 2) - (viewport.getWorldHeight() / 10))
+                ||
+                (player.getY() < camera.position.y - (viewport.getWorldHeight() / 2)
+                        + (viewport.getWorldHeight() / 10)))) {
+
             // Animiere Kamera zur Position des Spielers
             animateTo(player.getX(), player.getY());
         }
         // Animiere Kamera
         animateCamera();
-        
+
         // Aktualisiere Kamera
         camera.update();
     }
@@ -47,14 +50,15 @@ public class CameraController {
 
     // Animiere Kamera
     public void animateCamera() {
-        if(animating) {
-            if(animationTime > animationTimeMax) {
+        if (animating) {
+            if (animationTime > animationTimeMax) {
                 animating = false;
                 animationTime = 0;
             }
-            animationTime ++;
+            animationTime++;
             // Bewege Kamera zur Zielposition
-            camera.position.set(camera.position.x + (animationX - camera.position.x) / animationTimeMax, camera.position.y + (animationY - camera.position.y) / animationTimeMax, 0);
+            camera.position.set(camera.position.x + (animationX - camera.position.x) / animationTimeMax,
+                    camera.position.y + (animationY - camera.position.y) / animationTimeMax, 0);
         }
     }
 }

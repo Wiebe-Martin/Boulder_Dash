@@ -11,9 +11,7 @@ public class Dirt extends Entity{
         this.sprite = new Sprite(texture);
     }
 
-    @Override
-    public void update(float deltaTime) {
-    }
+
 
     @Override
     public String toString() {

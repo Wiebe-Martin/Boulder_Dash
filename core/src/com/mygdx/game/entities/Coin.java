@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 
+
 public class Coin extends Entity{
 
     public Coin(TiledMap map, int startX, int startY) {
@@ -12,9 +13,7 @@ public class Coin extends Entity{
         this.sprite = new Sprite(texture);
     }
 
-    @Override
-    public void update(float deltaTime) {
-    }
+   
 
     @Override
     public String toString() {

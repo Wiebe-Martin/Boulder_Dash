@@ -28,16 +28,16 @@ public class MyGdxGame extends ApplicationAdapter {
         // Initialisiere Kamera und Viewport
         camera = new OrthographicCamera();
         viewport = new FitViewport(viewportWidth, viewportHeight, camera);
-        
+
         viewport.apply(true);
-    
+
         // Lade die Tiled-Map
         tiledMap = new TmxMapLoader().load("maps/map2.tmx");
 
         map = new Map(tiledMap, camera, viewport);
 
         font = new BitmapFont();
-        font.setColor(0, 255, 0, 255);
+        font.setColor(255, 255, 255, 255);
     }
 
     @Override
@@ -48,11 +48,10 @@ public class MyGdxGame extends ApplicationAdapter {
 
         batch.begin();
 
-        map.render(batch);
-       
         // Setze die Projektionsmatrix auf den Batch
         batch.setProjectionMatrix(camera.combined);
 
+        map.render(batch, camera, viewportWidth, viewportHeight);
         // Berechne die Position für den FPS-Zähler basierend auf der Kameraposition
         float fpsX = camera.position.x - viewportWidth / 2 + 10;
         float fpsY = camera.position.y + viewportHeight / 2 - 10;
