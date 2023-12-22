@@ -4,12 +4,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 
-
 import java.util.ArrayList;
 
 public class Stone extends Entity {
-    private int moveSpeedDown = 10;
-    private int moveSpeedSide = 20;
+    private int moveSpeedDown = 6;
+    private int moveSpeedSide = 8;
 
     private int cooldown = 0;
 
@@ -27,10 +26,10 @@ public class Stone extends Entity {
     }
 
     public void handleCollision() {
-        boolean canFallLeft = isAir(tileX - 1, tileY) && isAir(tileX - 1, tileY - 1) && isStone(tileX , tileY - 1);
-        boolean canFallRight = isAir(tileX + 1, tileY) && isAir(tileX + 1, tileY - 1)&& isStone(tileX , tileY - 1);
+        boolean canFallLeft = isAir(tileX - 1, tileY) && isAir(tileX - 1, tileY - 1) && isStone(tileX, tileY - 1);
+        boolean canFallRight = isAir(tileX + 1, tileY) && isAir(tileX + 1, tileY - 1) && isStone(tileX, tileY - 1);
         boolean canFallDown = isAir(tileX, tileY - 1) && !isStone(tileX, tileY - 1);
-        //boolean canFall = canFallLeft || canFallRight || canFallDown;
+        // boolean canFall = canFallLeft || canFallRight || canFallDown;
 
         if (cooldown > 0) {
             cooldown--;
@@ -46,7 +45,7 @@ public class Stone extends Entity {
         } else if (canFallRight) {
             move(tileX + 1, tileY - 1);
             cooldown = moveSpeedSide;
-        } 
+        }
         cooldown--;
 
     }

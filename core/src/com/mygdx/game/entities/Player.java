@@ -11,7 +11,7 @@ import java.util.Iterator;
 public class Player extends Entity {
     PlayerInputProcessor playerInputProcessor;
 
-    private int moveSpeed = 3;
+    private int moveSpeed = 5;
 
     private int cooldown = 0;
     private int coins = 0;
@@ -31,9 +31,11 @@ public class Player extends Entity {
     }
 
     public void move(int newTileX, int newTileY) {
+
         Boolean notOutOfBouds = newTileX >= 0 && newTileX < collisionLayer.getWidth() && newTileY >= 0
                 && newTileY < collisionLayer.getHeight();
         Boolean nocollision = collisionLayer.getCell(newTileX, newTileY) == null && !isStone(newTileX, newTileY);
+
         if (notOutOfBouds && nocollision) {
             this.tileX = newTileX;
             this.tileY = newTileY;
@@ -56,7 +58,7 @@ public class Player extends Entity {
             Entity entity = iterator.next();
             if (entity instanceof Coin && entity.getTileX() == tileX && entity.getTileY() == tileY) {
                 coins++;
-                iterator.remove();
+                entity.remove();
             }
         }
     }

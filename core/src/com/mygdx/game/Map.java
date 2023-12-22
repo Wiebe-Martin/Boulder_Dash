@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -18,22 +19,20 @@ public class Map {
     private OrthogonalTiledMapRenderer mapRenderer;
     private CameraController cameraController;
     private OrthographicCamera camera;
-
-    private ArrayList<Entity> entities;
     private Player player;
+    private ArrayList<Entity> entities;
     private BitmapFont font;
-    
 
     public Map(TiledMap tiledMap, OrthographicCamera camera, Viewport viewport) {
         this.mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         this.entities = EntityFactory.createEntities(tiledMap);
         this.camera = camera;
         this.cameraController = new CameraController(camera, viewport);
-        this.getPlayer();
+        this.player = getPlayer();
         font = new BitmapFont();
         font.setColor(255, 255, 255, 255);
     }
-    
+
     public void render(SpriteBatch batch, OrthographicCamera camera, float viewportWidth, float viewportHeight) {
         // Set the view of the mapRenderer to the camera
         mapRenderer.setView(camera);
@@ -41,15 +40,19 @@ public class Map {
         // Render the Tiled map
         mapRenderer.render();
 
-        // Render all entities
-        for (Entity entity : entities) {
+        Iterator<Entity> iterator = entities.iterator();
+        while (iterator.hasNext()) {
+            Entity entity = iterator.next();
             if (entity != null) {
                 entity.update(Gdx.graphics.getDeltaTime(), entities);
                 entity.render(batch);
             }
+            if (entity.isRemove()) {
+                iterator.remove();
+            }
         }
 
-        //coin counter here
+        // coin counter here
         float fpsX = camera.position.x - viewportWidth / 2 + 10;
         float fpsY = camera.position.y + viewportHeight / 2 - 30;
         font.draw(batch, "Coins: " + player.getCoins(), fpsX, fpsY);
@@ -62,16 +65,17 @@ public class Map {
         cameraController.update(player);
     }
 
-    public void getPlayer() {
+    public Player getPlayer() {
         for (Entity entity : entities) {
             if (entity instanceof Player) {
-                player = (Player) entity;
-                entities.remove(player);
-                return;
+
+                // entities.remove(player);
+                return (Player) entity;
             }
         }
+        return null;
     }
-    
+
     public void dispose() {
         mapRenderer.dispose();
     }
