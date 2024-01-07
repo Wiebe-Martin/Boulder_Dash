@@ -52,12 +52,7 @@ public class MyGdxGame extends ApplicationAdapter {
         batch.setProjectionMatrix(camera.combined);
 
         map.render(batch, camera, viewportWidth, viewportHeight);
-        // Berechne die Position für den FPS-Zähler basierend auf der Kameraposition
-        float fpsX = camera.position.x - viewportWidth / 2 + 10;
-        float fpsY = camera.position.y + viewportHeight / 2 - 10;
-
-        font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), fpsX, fpsY);
-
+        
         batch.end();
     }
 

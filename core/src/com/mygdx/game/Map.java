@@ -53,10 +53,14 @@ public class Map {
         }
 
         // coin counter here
-        float fpsX = camera.position.x - viewportWidth / 2 + 10;
-        float fpsY = camera.position.y + viewportHeight / 2 - 30;
-        font.draw(batch, "Coins: " + player.getCoins(), fpsX, fpsY);
+        float coinX = camera.position.x - viewportWidth / 2 + 10;
+        float coinY = camera.position.y + viewportHeight / 2 - 30;
+        font.draw(batch, "Coins: " + player.getCoins(), coinX, coinY);
 
+        float fpsX = camera.position.x - viewportWidth / 2 + 10;
+        float fpsY = camera.position.y + viewportHeight / 2 - 10;
+
+        font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), fpsX, fpsY);
         // Update and render the player
 
         player.update(Gdx.graphics.getDeltaTime(), entities);
