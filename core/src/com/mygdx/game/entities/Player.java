@@ -16,18 +16,19 @@ import java.util.Iterator;
 public class Player extends Entity {
     PlayerInputProcessor playerInputProcessor;
 
-    TextureRegion currentFrame;
-
+    // config vars
     private int moveSpeed = 5;
+    private int waitStandingStillTime = 10;
+    private int[] walk_left = { 40, 41, 42, 43, 44, 45, 46, 47 };
+    private int[] walk_right = { 50, 51, 52, 53, 54, 55, 56, 57 };
+    private int[] standing = { 10, 11, 12, 13, 14, 15, 16, 17,
+            20, 21, 22, 23, 24, 25, 26, 27,
+            30, 31, 32, 33, 34, 35, 36, 37, };
 
+    TextureRegion currentFrame;
     private int cooldown = 0;
     private int coins = 0;
-
-    private int[] walk_left = {40, 41, 42, 43, 44, 45, 46, 47};
-    private int[] walk_right = {50, 51, 52, 53, 54, 55, 56, 57};
-    private int[] standing = {10, 11, 12, 13, 14, 15, 16, 17, 
-			      20, 21, 22, 23, 24, 25, 26, 27, 
-			      30, 31, 32, 33, 34, 35, 36, 37, };
+    private int waitStandingStillCounter = 0;
 
     Animation<TextureRegion> walk_left_anm;
     Animation<TextureRegion> standing_anm;
@@ -54,7 +55,7 @@ public class Player extends Entity {
         handleInput();
         handleAnimation();
         this.entities = entities;
-        
+
     }
 
     @Override
@@ -116,15 +117,28 @@ public class Player extends Entity {
     }
 
     public void handleAnimation() {
-		stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
+        stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
 
+        if (playerInputProcessor.isUp() || playerInputProcessor.isDown() || playerInputProcessor.isLeft()
+                || playerInputProcessor.isRight()) {
+            waitStandingStillCounter = 0;
+        }
         if (playerInputProcessor.isLeft()) {
             currentFrame = walk_left_anm.getKeyFrame(stateTime, true);
-        } else if (playerInputProcessor.isRight()) {
-            currentFrame = walk_right_anm.getKeyFrame(stateTime, true);
-        } else{
-            currentFrame = standing_anm.getKeyFrame(stateTime, true);
+            return;
         }
+        if (playerInputProcessor.isRight()) {
+            currentFrame = walk_right_anm.getKeyFrame(stateTime, true);
+            return;
+        }
+
+        if (waitStandingStillCounter > waitStandingStillTime) {
+            currentFrame = standing_anm.getKeyFrame(stateTime, true);
+            return;
+        }
+        currentFrame = standing_anm.getKeyFrame(0, true);
+        waitStandingStillCounter++;
+
     }
 
     public int getCoins() {
