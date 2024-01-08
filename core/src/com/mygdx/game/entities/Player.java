@@ -19,6 +19,7 @@ public class Player extends Entity {
     // config vars
     private int moveSpeed = 5;
     private int waitStandingStillTime = 10;
+    private int stoneMoveThreshold = 40;
     private int[] walk_left = { 40, 41, 42, 43, 44, 45, 46, 47 };
     private int[] walk_right = { 50, 51, 52, 53, 54, 55, 56, 57 };
     private int[] standing = { 10, 11, 12, 13, 14, 15, 16, 17,
@@ -29,6 +30,7 @@ public class Player extends Entity {
     private int cooldown = 0;
     private int coins = 0;
     private int waitStandingStillCounter = 0;
+    private int stoneMoveThresholdCounter = 0;
 
     Animation<TextureRegion> walk_left_anm;
     Animation<TextureRegion> standing_anm;
@@ -54,6 +56,7 @@ public class Player extends Entity {
     public void update(float deltaTime, ArrayList<Entity> entities) {
         handleInput();
         handleAnimation();
+        handleStoneMoving();
         this.entities = entities;
 
     }
@@ -77,10 +80,10 @@ public class Player extends Entity {
             this.y = tileY * collisionLayer.getTileHeight();
         }
 
-        handelCollison();
+        handleCollison();
     }
 
-    public void handelCollison() {
+    public void handleCollison() {
         boolean collision = collisionLayer.getCell(tileX, tileY) == null;
         if (collision) {
             // Modify the map data (e.g., set the tile to null or update properties)
@@ -143,6 +146,40 @@ public class Player extends Entity {
         currentFrame = standing_anm.getKeyFrame(3, true);
 
         waitStandingStillCounter++;
+
+    }
+
+    private void handleStoneMoving() {
+        if (playerInputProcessor.isLeft() || playerInputProcessor.isRight()) {
+            stoneMoveThresholdCounter++;
+
+        } else {
+            stoneMoveThresholdCounter = 0;
+        }
+        if (stoneMoveThresholdCounter > stoneMoveThreshold) {
+            stoneMoveThresholdCounter = 0;
+            moveConnectingStone();
+
+        }
+    }
+
+    private void moveConnectingStone() {
+        if (playerInputProcessor.isLeft()) {
+            for (Entity entity : entities) {
+                if (entity instanceof Stone && entity.getTileX() == tileX - 1 && entity.getTileY() == tileY) {
+                    ((Stone) entity).pushLeft();
+                }
+            }
+            move(tileX - 1, tileY);
+        }
+        if (playerInputProcessor.isRight()) {
+            for (Entity entity : entities) {
+                if (entity instanceof Stone && entity.getTileX() == tileX + 1 && entity.getTileY() == tileY) {
+                    ((Stone) entity).pushRight();
+                }
+            }
+            move(tileX + 1, tileY);
+        }
 
     }
 
