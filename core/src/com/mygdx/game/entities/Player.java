@@ -25,7 +25,9 @@ public class Player extends Entity {
 
     private int[] walk_left = {40, 41, 42, 43, 44, 45, 46, 47};
     private int[] walk_right = {50, 51, 52, 53, 54, 55, 56, 57};
-    private int[] standing = {0};
+    private int[] standing = {10, 11, 12, 13, 14, 15, 16, 17, 
+			      20, 21, 22, 23, 24, 25, 26, 27, 
+			      30, 31, 32, 33, 34, 35, 36, 37, };
 
     Animation<TextureRegion> walk_left_anm;
     Animation<TextureRegion> standing_anm;
