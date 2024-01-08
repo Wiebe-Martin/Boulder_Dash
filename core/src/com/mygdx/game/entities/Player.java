@@ -9,7 +9,6 @@ import com.mygdx.game.rendering.Animator;
 import com.mygdx.game.utils.PlayerInputProcessor;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Random;
 
 public class Player extends Entity {
 
@@ -66,19 +65,6 @@ public class Player extends Entity {
         Boolean nocollision = collisionLayer.getCell(newTileX, newTileY) == null;
         Boolean stoneCollison = isStone(newTileX, newTileY);
 
-        if (stoneCollison) {
-            Stone stone = (Stone) getEntity(newTileX, newTileY);
-        
-            if ((playerInputProcessor.isLeft() && isAir(tileX - 2, tileY))
-                    || (playerInputProcessor.isRight() && isAir(tileX + 2, tileY))) {
-                int xOffset = (playerInputProcessor.isLeft()) ? -1 : 1;
-
-                int ran = ((int) Math.random()) + 1;
-                stone.move(newTileX + xOffset, newTileY);
-                stoneCollison = false;
-            }
-        }
-        
         if (notOutOfBouds && nocollision && !stoneCollison) {
             this.tileX = newTileX;
             this.tileY = newTileY;
@@ -87,7 +73,7 @@ public class Player extends Entity {
             this.y = tileY * collisionLayer.getTileHeight();
         }
 
-        handelCollison();
+        handleCollison();
     }
 
     public void handleCollison() {
@@ -189,10 +175,6 @@ public class Player extends Entity {
             move(tileX + 1, tileY);
         }
 
-    }
-
-    public void moveStone(Stone stone, int newTileX, int newTileY) {
-        stone.move(newTileX, newTileY);
     }
 
     public void moveStone(Stone stone, int newTileX, int newTileY) {

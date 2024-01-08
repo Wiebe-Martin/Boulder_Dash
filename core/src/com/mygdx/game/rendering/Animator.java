@@ -60,19 +60,16 @@ public class Animator implements ApplicationListener {
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'resize'");
 	}
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'pause'");
 	}
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'resume'");
 	}
 }

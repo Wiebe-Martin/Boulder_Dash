@@ -18,7 +18,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 public class Map {
     private OrthogonalTiledMapRenderer mapRenderer;
     private CameraController cameraController;
-    private OrthographicCamera camera;
     private Player player;
     private ArrayList<Entity> entities;
     private BitmapFont font;
@@ -26,7 +25,6 @@ public class Map {
     public Map(TiledMap tiledMap, OrthographicCamera camera, Viewport viewport) {
         this.mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         this.entities = EntityFactory.createEntities(tiledMap);
-        this.camera = camera;
         this.cameraController = new CameraController(camera, viewport);
         this.player = getPlayer();
         font = new BitmapFont();
