@@ -1,12 +1,17 @@
 package com.mygdx.game.entities;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.mygdx.game.rendering.Animator;
 
 import java.util.ArrayList;
 
 public class Stone extends Entity {
+    protected int[] texture = {70};
+
+    Animation<TextureRegion> texture_anm;
+
     private int moveSpeedDown = 6;
     private int moveSpeedSide = 8;
 
@@ -14,15 +19,15 @@ public class Stone extends Entity {
 
     public Stone(TiledMap map, int startX, int startY) {
         super(map, startX, startY);
-        this.texture = new Texture("textures/entities/stone.png");
-        this.sprite = new Sprite(texture);
+
+        this.texture_anm = Animator.getAnimation(texture);        
+        this.currentFrame = texture_anm.getKeyFrame(stateTime, false);
     }
 
     @Override
     public void update(float deltaTime, ArrayList<Entity> entities) {
         this.entities = entities;
         handleCollision();
-
     }
 
     public void handleCollision() {

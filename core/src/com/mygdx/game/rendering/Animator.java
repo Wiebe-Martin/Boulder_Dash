@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Animator implements ApplicationListener {
 
 	// Constant rows and columns of the sprite sheet
-	private static final int FRAME_COLS = 10, FRAME_ROWS = 30;
+	//private static final int FRAME_COLS = 10, FRAME_ROWS = 30;
 
 	// Objects used
 	static Texture walkSheet = new Texture(Gdx.files.internal("maps/sprites/sprites.png"));
@@ -37,7 +37,7 @@ public class Animator implements ApplicationListener {
 		}
 
 		// Initialize the Animation with the frame interval and array of frames
-		return new Animation<TextureRegion>(0.0333f, frames);
+		return new Animation<TextureRegion>(0.075f, frames);
 	}
 
 	@Override

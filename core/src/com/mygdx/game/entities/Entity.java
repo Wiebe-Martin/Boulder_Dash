@@ -1,22 +1,34 @@
 package com.mygdx.game.entities;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.mygdx.game.rendering.Animator;
+
 import java.util.ArrayList;
 
 public class Entity {
-    protected Sprite sprite;
-    protected Texture texture;
+    protected TextureRegion currentFrame;
+
+    protected int[] def = {9};
+
+    Animation<TextureRegion> def_anm;
+    //protected Sprite sprite;
+    //protected Texture texture;
     protected float x, y;
 
     protected int tileX, tileY;
+
     protected TiledMap map;
     protected TiledMapTileLayer collisionLayer;
     protected TiledMapTileLayer dirtLayer;
+
     protected float moveSpeed;
+    protected float stateTime = 0;
+
     protected ArrayList<Entity> entities = new ArrayList<Entity>();
     protected boolean remove = false;
 
@@ -29,11 +41,13 @@ public class Entity {
 
         this.x = tileX * collisionLayer.getTileWidth();
         this.y = tileY * collisionLayer.getTileHeight();
+
+        this.def_anm = Animator.getAnimation(def);        
+        this.currentFrame = def_anm.getKeyFrame(stateTime, true);
     }
 
     public void render(SpriteBatch batch) {
-        sprite.setPosition(x, y);
-        sprite.draw(batch);
+        batch.draw(currentFrame, x, y);
     }
 
     public float getX() {
@@ -61,6 +75,9 @@ public class Entity {
     }
 
     public void update(float deltaTime, ArrayList<Entity> entities) {
+        stateTime += Gdx.graphics.getDeltaTime();
+
+        this.currentFrame = def_anm.getKeyFrame(stateTime, true);
         this.entities = entities;
     }
 
@@ -93,8 +110,18 @@ public class Entity {
             }
         }
         return false;
-
     }
+
+    protected Entity getEntity(int tileX, int tileY) {
+        for (Entity entity : entities) {
+            if (entity.getTileX() == tileX && entity.getTileY() == tileY) {
+                return entity;
+            }
+        }
+        
+        return null;
+    }
+
 
     public void handleCollison() {
         System.out.println(getTileX() + "/" + getTileY());
