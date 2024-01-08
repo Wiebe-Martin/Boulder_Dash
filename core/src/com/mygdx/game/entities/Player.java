@@ -117,7 +117,8 @@ public class Player extends Entity {
     }
 
     public void handleAnimation() {
-        stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
+        // stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation
+        // time
 
         if (playerInputProcessor.isUp() || playerInputProcessor.isDown() || playerInputProcessor.isLeft()
                 || playerInputProcessor.isRight()) {
@@ -125,18 +126,22 @@ public class Player extends Entity {
         }
         if (playerInputProcessor.isLeft()) {
             currentFrame = walk_left_anm.getKeyFrame(stateTime, true);
+            stateTime += 1 % walk_left.length * Gdx.graphics.getDeltaTime();
             return;
         }
         if (playerInputProcessor.isRight()) {
             currentFrame = walk_right_anm.getKeyFrame(stateTime, true);
+            stateTime += 1 % walk_right.length * Gdx.graphics.getDeltaTime();
             return;
         }
 
         if (waitStandingStillCounter > waitStandingStillTime) {
             currentFrame = standing_anm.getKeyFrame(stateTime, true);
+            stateTime += 1 % standing.length * Gdx.graphics.getDeltaTime() * 0.5;
             return;
         }
-        currentFrame = standing_anm.getKeyFrame(0, true);
+        currentFrame = standing_anm.getKeyFrame(3, true);
+
         waitStandingStillCounter++;
 
     }
