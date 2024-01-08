@@ -52,13 +52,15 @@ public class MyGdxGame extends ApplicationAdapter {
         batch.setProjectionMatrix(camera.combined);
 
         map.render(batch, camera, viewportWidth, viewportHeight);
-        
+
         batch.end();
     }
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
+        viewportHeight = height;
+        viewportWidth = width;
     }
 
     @Override

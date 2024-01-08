@@ -69,6 +69,20 @@ public class Stone extends Entity {
 
     }
 
+    public void pushLeft() {
+        boolean canPush = isAir(tileX - 1, tileY) && !isStone(tileX - 1, tileY);
+        if (canPush) {
+            move(tileX - 1, tileY);
+        }
+    }
+
+    public void pushRight() {
+        boolean canPush = isAir(tileX + 1, tileY) && !isStone(tileX + 1, tileY);
+        if (canPush) {
+            move(tileX + 1, tileY);
+        }
+    }
+
     @Override
     public String toString() {
         return "Stone at (" + tileX + ", " + tileY + ")";
