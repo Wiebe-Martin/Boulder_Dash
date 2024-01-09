@@ -1,30 +1,31 @@
-package com.mygdx.game;
+package com.mygdx.game.screens;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.BoulderDash;
+import com.mygdx.game.MyGdxGameTest;
 
-public class MyGdxGame extends ApplicationAdapter {
+public class GameScreen extends ScreenAdapter{
+    MyGdxGameTest game;
+
     private OrthographicCamera camera;
     private Viewport viewport;
     private TiledMap tiledMap;
-    private SpriteBatch batch;
-    private BoulderDash map;
-    private BitmapFont font;
 
-    int viewportWidth = 640; // Ändere die gewünschte Viewport-Breite
-    int viewportHeight = 360;
+    private BoulderDash boulderDash;
 
-    @Override
-    public void create() {
-        batch = new SpriteBatch();
+    private int viewportWidth = 640; // Ändere die gewünschte Viewport-Breite
+    private int viewportHeight = 360;
+
+    public GameScreen(MyGdxGameTest game) {
+        this.game = game;
+
         // Initialisiere Kamera und Viewport
         camera = new OrthographicCamera();
         viewport = new FitViewport(viewportWidth, viewportHeight, camera);
@@ -34,26 +35,28 @@ public class MyGdxGame extends ApplicationAdapter {
         // Lade die Tiled-Map
         tiledMap = new TmxMapLoader().load("maps/map2.tmx");
 
-        map = new BoulderDash(tiledMap, camera, viewport);
-
-        font = new BitmapFont();
-        font.setColor(255, 255, 255, 255);
+        boulderDash = new BoulderDash(tiledMap, camera, viewport);
     }
 
     @Override
-    public void render() {
+    public void show() {
+        
+    }
+
+    @Override
+    public void render(float delta) {
         // Lösche den Bildschirm
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        batch.begin();
+        game.batch.begin();
 
         // Setze die Projektionsmatrix auf den Batch
-        batch.setProjectionMatrix(camera.combined);
+        game.batch.setProjectionMatrix(camera.combined);
 
-        map.render(batch, camera, viewportWidth, viewportHeight);
+        boulderDash.render(game.batch, camera, viewportWidth, viewportHeight);
 
-        batch.end();
+        game.batch.end();
     }
 
     @Override
@@ -64,10 +67,7 @@ public class MyGdxGame extends ApplicationAdapter {
     }
 
     @Override
-    public void dispose() {
-        // Gib Ressourcen frei, wenn das Spiel beendet wird
-        tiledMap.dispose();
-        batch.dispose();
-        font.dispose();
+    public void hide(){
+        Gdx.input.setInputProcessor(null);
     }
 }

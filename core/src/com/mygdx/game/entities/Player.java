@@ -23,7 +23,9 @@ public class Player extends Entity {
             20, 21, 22, 23, 24, 25, 26, 27,
             30, 31, 32, 33, 34, 35, 36, 37, };
 
-    TextureRegion currentFrame;
+
+    public boolean dead = false;
+
     private int cooldown = 0;
     private int coins = 0;
     private int waitStandingStillCounter = 0;
@@ -48,16 +50,14 @@ public class Player extends Entity {
     }
 
     public void update(float deltaTime, ArrayList<Entity> entities) {
+        handleCollison();
         handleInput();
         handleAnimation();
         handleStoneMoving();
         this.entities = entities;
     }
 
-    @Override
-    public void render(SpriteBatch batch) {
-        batch.draw(currentFrame, x, y);
-    }
+
 
     public void move(int newTileX, int newTileY) {
         Boolean notOutOfBouds = newTileX >= 0 && newTileX < collisionLayer.getWidth() && newTileY >= 0
@@ -72,11 +72,20 @@ public class Player extends Entity {
             this.x = tileX * collisionLayer.getTileWidth();
             this.y = tileY * collisionLayer.getTileHeight();
         }
-
-        handleCollison();
     }
 
     public void handleCollison() {
+        if(isStone(tileX, tileY + 1)) {
+            Stone stone = (Stone) getEntity(tileX, tileY + 1);
+
+            if(stone.isFalling()) {
+                dead = true;
+                explode();
+                
+                return;
+            }
+        }
+
         boolean collision = collisionLayer.getCell(tileX, tileY) == null;
         if (collision) {
             // Modify the map data (e.g., set the tile to null or update properties)
@@ -88,7 +97,7 @@ public class Player extends Entity {
             Entity entity = iterator1.next();
             if (entity instanceof Coin && entity.getTileX() == tileX && entity.getTileY() == tileY) {
                 coins++;
-                entity.remove();
+                entity.explode();
             }
         }
     }
@@ -123,18 +132,18 @@ public class Player extends Entity {
         }
         if (playerInputProcessor.isLeft()) {
             currentFrame = walk_left_anm.getKeyFrame(stateTime, true);
-            stateTime += 1 % walk_left.length * Gdx.graphics.getDeltaTime();
+            stateTime = stateTime + 1 % walk_left.length * Gdx.graphics.getDeltaTime();
             return;
         }
         if (playerInputProcessor.isRight()) {
             currentFrame = walk_right_anm.getKeyFrame(stateTime, true);
-            stateTime += 1 % walk_right.length * Gdx.graphics.getDeltaTime();
+            stateTime = stateTime + 1 % walk_right.length * Gdx.graphics.getDeltaTime();
             return;
         }
 
         if (waitStandingStillCounter > waitStandingStillTime) {
             currentFrame = standing_anm.getKeyFrame(stateTime, true);
-            stateTime += 1 % standing.length * Gdx.graphics.getDeltaTime() * 0.5;
+            stateTime = stateTime + 1 % standing.length * Gdx.graphics.getDeltaTime() * 0.5f;
             return;
         }
         currentFrame = standing_anm.getKeyFrame(3, true);

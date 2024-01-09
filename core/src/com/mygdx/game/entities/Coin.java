@@ -23,7 +23,7 @@ public class Coin extends Entity{
     }
 
     public void update(float deltaTime, ArrayList<Entity> entities) {
-        stateTime += Gdx.graphics.getDeltaTime();
+        stateTime = stateTime + 1 % texture.length * deltaTime;
 
         this.currentFrame = texture_anm.getKeyFrame(stateTime, true);
         this.entities = entities;

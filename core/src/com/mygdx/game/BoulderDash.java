@@ -15,14 +15,21 @@ import com.mygdx.game.rendering.CameraController;
 import com.mygdx.game.rendering.EntityFactory;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
-public class Map {
+public class BoulderDash {
+
+    public enum GameState {
+        GAMING,
+        GAME_OVER
+    }
+
+    private GameState state = GameState.GAMING;
     private OrthogonalTiledMapRenderer mapRenderer;
     private CameraController cameraController;
     private Player player;
     private ArrayList<Entity> entities;
     private BitmapFont font;
 
-    public Map(TiledMap tiledMap, OrthographicCamera camera, Viewport viewport) {
+    public BoulderDash(TiledMap tiledMap, OrthographicCamera camera, Viewport viewport) {
         this.mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         this.entities = EntityFactory.createEntities(tiledMap);
         this.cameraController = new CameraController(camera, viewport);
@@ -31,13 +38,47 @@ public class Map {
         font.setColor(255, 255, 255, 255);
     }
 
+    public Player getPlayer() {
+        for (Entity entity : entities) {
+            if (entity instanceof Player) {
+                return (Player) entity;
+            }
+        }
+        return null;
+    }
+
     public void render(SpriteBatch batch, OrthographicCamera camera, float viewportWidth, float viewportHeight) {
-        // Set the view of the mapRenderer to the camera
+        switch (state){
+            case GAMING:
+                renderGaming(batch, camera, viewportWidth, viewportHeight);
+                break;
+            case GAME_OVER:
+                //renderDeath();
+                renderGaming(batch, camera, viewportWidth, viewportHeight);
+                return;
+
+        }
+    }
+
+    private void renderGaming(SpriteBatch batch, OrthographicCamera camera, float viewportWidth, float viewportHeight) {
+            if (player.dead) {
+                state = GameState.GAME_OVER;                
+            }
+            
+            renderMap(batch, camera);
+            renderEntities(batch);
+            renderCoinCounter(batch, camera, viewportWidth, viewportHeight);
+            renderFPSCounter(batch, camera, viewportWidth, viewportHeight);
+            updatePlayer();
+            updateCamera();
+    }
+
+    private void renderMap(SpriteBatch batch, OrthographicCamera camera) {
         mapRenderer.setView(camera);
-
-        // Render the Tiled map
         mapRenderer.render();
+    }
 
+    private void renderEntities(SpriteBatch batch) {
         Iterator<Entity> iterator = entities.iterator();
         while (iterator.hasNext()) {
             Entity entity = iterator.next();
@@ -49,34 +90,28 @@ public class Map {
                 iterator.remove();
             }
         }
+    }
 
-        // coin counter here
+    private void renderCoinCounter(SpriteBatch batch, OrthographicCamera camera, float viewportWidth, float viewportHeight) {
         float coinX = camera.position.x - viewportWidth / 2 + 10;
         float coinY = camera.position.y + viewportHeight / 2 - 30;
         font.draw(batch, "Coins: " + player.getCoins(), coinX, coinY);
+    }
 
+    private void renderFPSCounter(SpriteBatch batch, OrthographicCamera camera, float viewportWidth, float viewportHeight) {
         float fpsX = camera.position.x - viewportWidth / 2 + 10;
         float fpsY = camera.position.y + viewportHeight / 2 - 10;
-
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), fpsX, fpsY);
-        // Update and render the player
+    }
 
+    private void updatePlayer() {
         player.update(Gdx.graphics.getDeltaTime(), entities);
-        player.render(batch);
+    }
 
+    private void updateCamera() {
         cameraController.update(player);
     }
-
-    public Player getPlayer() {
-        for (Entity entity : entities) {
-            if (entity instanceof Player) {
-
-                // entities.remove(player);
-                return (Player) entity;
-            }
-        }
-        return null;
-    }
+    
 
     public void dispose() {
         mapRenderer.dispose();

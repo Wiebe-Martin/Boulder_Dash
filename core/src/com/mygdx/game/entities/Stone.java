@@ -15,10 +15,13 @@ public class Stone extends Entity {
     private int moveSpeedDown = 6;
     private int moveSpeedSide = 8;
 
-    private int cooldown = 0;
+    private int cooldown;
+
+    private boolean falling;
 
     public Stone(TiledMap map, int startX, int startY) {
         super(map, startX, startY);
+        this.cooldown = moveSpeedDown;
 
         this.texture_anm = Animator.getAnimation(texture);        
         this.currentFrame = texture_anm.getKeyFrame(stateTime, false);
@@ -31,10 +34,15 @@ public class Stone extends Entity {
     }
 
     public void handleCollision() {
+        
         boolean canFallLeft = isAir(tileX - 1, tileY) && isAir(tileX - 1, tileY - 1) && isStone(tileX, tileY - 1);
         boolean canFallRight = isAir(tileX + 1, tileY) && isAir(tileX + 1, tileY - 1) && isStone(tileX, tileY - 1);
         boolean canFallDown = isAir(tileX, tileY - 1) && !isStone(tileX, tileY - 1);
-        // boolean canFall = canFallLeft || canFallRight || canFallDown;
+        boolean canFall = canFallLeft || canFallRight || canFallDown;
+
+        if (!canFall) {
+            return;
+        }
 
         if (cooldown > 0) {
             cooldown--;
@@ -43,16 +51,23 @@ public class Stone extends Entity {
 
         if (canFallDown) {
             move(tileX, tileY - 1);
+            falling = true;
             cooldown = moveSpeedDown;
+            return;
         } else if (canFallLeft) {
             move(tileX - 1, tileY - 1);
+            falling = true;
             cooldown = moveSpeedSide;
+            return;
         } else if (canFallRight) {
             move(tileX + 1, tileY - 1);
+            falling = true;
             cooldown = moveSpeedSide;
+            return;
         }
-        cooldown--;
 
+        falling = false;        
+        cooldown--;
     }
 
     public void move(int newTileX, int newTileY) {
@@ -81,6 +96,10 @@ public class Stone extends Entity {
         if (canPush) {
             move(tileX + 1, tileY);
         }
+    }
+
+    public boolean isFalling() {
+        return falling;
     }
 
     @Override

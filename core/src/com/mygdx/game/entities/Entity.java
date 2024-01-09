@@ -14,10 +14,11 @@ public class Entity {
     protected TextureRegion currentFrame;
 
     protected int[] def = {9};
+    protected int[] explosion = {1, 2, 3, 3, 2, 1};
 
-    Animation<TextureRegion> def_anm;
-    //protected Sprite sprite;
-    //protected Texture texture;
+    protected Animation<TextureRegion> def_anm;
+    protected Animation<TextureRegion> explosion_anm;
+    
     protected float x, y;
 
     protected int tileX, tileY;
@@ -31,6 +32,7 @@ public class Entity {
 
     protected ArrayList<Entity> entities = new ArrayList<Entity>();
     protected boolean remove = false;
+    protected boolean isExploding = false;
 
     public Entity(TiledMap map, int startX, int startY) {
         this.map = map;
@@ -44,9 +46,20 @@ public class Entity {
 
         this.def_anm = Animator.getAnimation(def);        
         this.currentFrame = def_anm.getKeyFrame(stateTime, true);
+        this.explosion_anm = Animator.getAnimation(explosion);
     }
 
     public void render(SpriteBatch batch) {
+
+        if (isExploding) {
+            this.currentFrame = explosion_anm.getKeyFrame(stateTime, false);
+            stateTime += Gdx.graphics.getDeltaTime() * 0.5f;
+            if (explosion_anm.isAnimationFinished(stateTime)) {
+                remove();
+            }
+            return;
+        }
+        
         batch.draw(currentFrame, x, y);
     }
 
@@ -110,6 +123,10 @@ public class Entity {
             }
         }
         return false;
+    }
+
+    public void explode() {
+        isExploding = true;
     }
 
     protected Entity getEntity(int tileX, int tileY) {

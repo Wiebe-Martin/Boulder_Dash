@@ -11,6 +11,6 @@ public class DesktopLauncher {
 
 		config.setForegroundFPS(30);
 		config.setTitle("Boulder Dash");
-		new Lwjgl3Application(new MyGdxGame(), config);
+		new Lwjgl3Application(new MyGdxGameTest(), config);
 	}
 }
