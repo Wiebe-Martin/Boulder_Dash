@@ -13,12 +13,12 @@ import java.util.ArrayList;
 public class Entity {
     protected TextureRegion currentFrame;
 
-    protected int[] def = {9};
-    protected int[] explosion = {1, 2, 3, 3, 2, 1};
+    protected int[] def = { 9 };
+    protected int[] explosion = { 1, 2, 3, 3, 2, 1 };
 
     protected Animation<TextureRegion> def_anm;
     protected Animation<TextureRegion> explosion_anm;
-    
+
     protected float x, y;
 
     protected int tileX, tileY;
@@ -44,7 +44,7 @@ public class Entity {
         this.x = tileX * collisionLayer.getTileWidth();
         this.y = tileY * collisionLayer.getTileHeight();
 
-        this.def_anm = Animator.getAnimation(def);        
+        this.def_anm = Animator.getAnimation(def);
         this.currentFrame = def_anm.getKeyFrame(stateTime, true);
         this.explosion_anm = Animator.getAnimation(explosion);
     }
@@ -57,9 +57,8 @@ public class Entity {
             if (explosion_anm.isAnimationFinished(stateTime)) {
                 remove();
             }
-            return;
         }
-        
+
         batch.draw(currentFrame, x, y);
     }
 
@@ -135,10 +134,9 @@ public class Entity {
                 return entity;
             }
         }
-        
+
         return null;
     }
-
 
     public void handleCollison() {
         System.out.println(getTileX() + "/" + getTileY());

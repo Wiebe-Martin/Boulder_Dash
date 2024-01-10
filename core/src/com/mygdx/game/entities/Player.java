@@ -23,7 +23,6 @@ public class Player extends Entity {
             20, 21, 22, 23, 24, 25, 26, 27,
             30, 31, 32, 33, 34, 35, 36, 37, };
 
-
     public boolean dead = false;
 
     private int cooldown = 0;
@@ -50,14 +49,17 @@ public class Player extends Entity {
     }
 
     public void update(float deltaTime, ArrayList<Entity> entities) {
+
+        if (dead) {
+            return;
+        }
+
         handleCollison();
         handleInput();
         handleAnimation();
         handleStoneMoving();
         this.entities = entities;
     }
-
-
 
     public void move(int newTileX, int newTileY) {
         Boolean notOutOfBouds = newTileX >= 0 && newTileX < collisionLayer.getWidth() && newTileY >= 0
@@ -68,20 +70,20 @@ public class Player extends Entity {
         if (notOutOfBouds && nocollision && !stoneCollison) {
             this.tileX = newTileX;
             this.tileY = newTileY;
-        
+
             this.x = tileX * collisionLayer.getTileWidth();
             this.y = tileY * collisionLayer.getTileHeight();
         }
     }
 
     public void handleCollison() {
-        if(isStone(tileX, tileY + 1)) {
+        if (isStone(tileX, tileY + 1)) {
             Stone stone = (Stone) getEntity(tileX, tileY + 1);
 
-            if(stone.isFalling()) {
+            if (stone.isFalling()) {
                 dead = true;
                 explode();
-                
+
                 return;
             }
         }
@@ -97,7 +99,7 @@ public class Player extends Entity {
             Entity entity = iterator1.next();
             if (entity instanceof Coin && entity.getTileX() == tileX && entity.getTileY() == tileY) {
                 coins++;
-                entity.explode();
+                entity.remove();
             }
         }
     }
