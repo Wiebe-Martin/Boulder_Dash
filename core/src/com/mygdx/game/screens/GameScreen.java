@@ -6,12 +6,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.BoulderDash;
 import com.mygdx.game.MyGdxGameTest;
 
-public class GameScreen extends ScreenAdapter{
+public class GameScreen extends ScreenAdapter {
     MyGdxGameTest game;
 
     private OrthographicCamera camera;
@@ -28,7 +29,7 @@ public class GameScreen extends ScreenAdapter{
 
         // Initialisiere Kamera und Viewport
         camera = new OrthographicCamera();
-        viewport = new FitViewport(viewportWidth, viewportHeight, camera);
+        viewport = new ExtendViewport(viewportWidth, viewportHeight, camera);
 
         viewport.apply(true);
 
@@ -40,7 +41,7 @@ public class GameScreen extends ScreenAdapter{
 
     @Override
     public void show() {
-        
+
     }
 
     @Override
@@ -67,7 +68,7 @@ public class GameScreen extends ScreenAdapter{
     }
 
     @Override
-    public void hide(){
+    public void hide() {
         Gdx.input.setInputProcessor(null);
     }
 }

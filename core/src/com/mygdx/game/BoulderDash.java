@@ -48,12 +48,12 @@ public class BoulderDash {
     }
 
     public void render(SpriteBatch batch, OrthographicCamera camera, float viewportWidth, float viewportHeight) {
-        switch (state){
+        switch (state) {
             case GAMING:
                 renderGaming(batch, camera, viewportWidth, viewportHeight);
                 break;
             case GAME_OVER:
-                //renderDeath();
+                // renderDeath();
                 renderGaming(batch, camera, viewportWidth, viewportHeight);
                 return;
 
@@ -61,16 +61,16 @@ public class BoulderDash {
     }
 
     private void renderGaming(SpriteBatch batch, OrthographicCamera camera, float viewportWidth, float viewportHeight) {
-            if (player.dead) {
-                state = GameState.GAME_OVER;                
-            }
-            
-            renderMap(batch, camera);
-            renderEntities(batch);
-            renderCoinCounter(batch, camera, viewportWidth, viewportHeight);
-            renderFPSCounter(batch, camera, viewportWidth, viewportHeight);
-            updatePlayer();
-            updateCamera();
+        if (player.dead) {
+            state = GameState.GAME_OVER;
+        }
+
+        renderMap(batch, camera);
+        renderEntities(batch);
+        renderCoinCounter(batch, camera, viewportWidth, viewportHeight);
+        renderFPSCounter(batch, camera, viewportWidth, viewportHeight);
+        updatePlayer();
+        updateCamera();
     }
 
     private void renderMap(SpriteBatch batch, OrthographicCamera camera) {
@@ -92,13 +92,15 @@ public class BoulderDash {
         }
     }
 
-    private void renderCoinCounter(SpriteBatch batch, OrthographicCamera camera, float viewportWidth, float viewportHeight) {
+    private void renderCoinCounter(SpriteBatch batch, OrthographicCamera camera, float viewportWidth,
+            float viewportHeight) {
         float coinX = camera.position.x - viewportWidth / 2 + 10;
         float coinY = camera.position.y + viewportHeight / 2 - 30;
         font.draw(batch, "Coins: " + player.getCoins(), coinX, coinY);
     }
 
-    private void renderFPSCounter(SpriteBatch batch, OrthographicCamera camera, float viewportWidth, float viewportHeight) {
+    private void renderFPSCounter(SpriteBatch batch, OrthographicCamera camera, float viewportWidth,
+            float viewportHeight) {
         float fpsX = camera.position.x - viewportWidth / 2 + 10;
         float fpsY = camera.position.y + viewportHeight / 2 - 10;
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), fpsX, fpsY);
@@ -111,7 +113,6 @@ public class BoulderDash {
     private void updateCamera() {
         cameraController.update(player);
     }
-    
 
     public void dispose() {
         mapRenderer.dispose();

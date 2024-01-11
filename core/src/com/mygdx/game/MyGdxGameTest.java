@@ -9,17 +9,18 @@ public class MyGdxGameTest extends Game {
     public SpriteBatch batch;
     public BitmapFont font;
 
-	@Override
-	public void create() {
-		batch = new SpriteBatch();
+    @Override
+    public void create() {
+        batch = new SpriteBatch();
         font = new BitmapFont();
         font.setColor(255, 255, 255, 255);
         setScreen(new TitleScreen(this));
-	}
+    }
 
     @Override
     public void dispose() {
         // Gib Ressourcen frei, wenn das Spiel beendet wird
         batch.dispose();
     }
+
 }

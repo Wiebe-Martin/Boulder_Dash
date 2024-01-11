@@ -9,7 +9,7 @@ public class CameraController {
     Camera camera;
     Viewport viewport;
     int animationTime = 0;
-    int animationTimeMax = 2;
+    int animationTimeMax = 6;
     boolean animating = false;
     float animationX = 0;
     float animationY = 0;
