@@ -55,6 +55,9 @@ public class TitleScreen implements Screen {
         messageGenerator.dispose();
     }
 
+    private float opacity = 1f;
+    private float opacitySpeed = 2f;
+
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
@@ -65,16 +68,24 @@ public class TitleScreen implements Screen {
 
         float titleX = camera.viewportWidth / 2 - new GlyphLayout(titleFont, "Boulder Dash").width / 2;
         float titleY = (float) (camera.viewportHeight * 0.55 + titleFont.getLineHeight() / 2);
+        titleFont.setColor(1, 1, 1, 1); // Set the opacity
         titleFont.draw(batch, "Boulder Dash", titleX, titleY);
 
         float messageX = camera.viewportWidth / 2 - new GlyphLayout(messageFont, "Press SPACE to play").width / 2;
         float messageY = (float) (camera.viewportHeight * 0.45 - messageFont.getLineHeight() / 2);
-        messageFont.draw(batch, "Press SPACE to play", messageX, messageY);
+        messageFont.setColor(1, 1, 1, opacity); // Set the opacity
+        messageFont.draw(batch, "SPACE zum spielen", messageX, messageY);
 
         batch.end();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             game.setScreen(new GameScreen(game)); // Replace PlayScreen with your actual gameplay screen
+        }
+
+        // Update the opacity
+        opacity += opacitySpeed * delta;
+        if (opacity > 1f || opacity < 0f) {
+            opacitySpeed *= -1; // Reverse the opacity speed when reaching the limits
         }
     }
 
