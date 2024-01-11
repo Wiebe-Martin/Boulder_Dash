@@ -60,7 +60,7 @@ public class TitleScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(camera.combined);
@@ -74,7 +74,7 @@ public class TitleScreen implements Screen {
         float messageX = camera.viewportWidth / 2 - new GlyphLayout(messageFont, "Press SPACE to play").width / 2;
         float messageY = (float) (camera.viewportHeight * 0.45 - messageFont.getLineHeight() / 2);
         messageFont.setColor(1, 1, 1, opacity); // Set the opacity
-        messageFont.draw(batch, "SPACE zum spielen", messageX, messageY);
+        messageFont.draw(batch, "SPACE zum starten ...", messageX, messageY);
 
         batch.end();
 
@@ -98,6 +98,10 @@ public class TitleScreen implements Screen {
 
         titleFont.getData().setScale(width / 800f);
         messageFont.getData().setScale(width / 1200f);
+        opacity += opacitySpeed * Gdx.graphics.getDeltaTime();
+        if (opacity > 1f || opacity < 0f) {
+            opacitySpeed *= -1; // Reverse the opacity speed when reaching the limits
+        }
 
     }
 
