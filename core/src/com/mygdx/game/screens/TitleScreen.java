@@ -10,10 +10,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGameTest;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
 public class TitleScreen implements Screen {
 
@@ -42,19 +43,17 @@ public class TitleScreen implements Screen {
         FreeTypeFontGenerator titleGenerator = new FreeTypeFontGenerator(
                 Gdx.files.internal("fonts/RubikGlitch-Regular.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter titleParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        titleParameter.size = 128; // Set the size you want
+        titleParameter.size = 82; // Set the size you want
         titleFont = titleGenerator.generateFont(titleParameter);
         titleGenerator.dispose();
 
         FreeTypeFontGenerator messageGenerator = new FreeTypeFontGenerator(
                 Gdx.files.internal("fonts/CutiveMono-Regular.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter messageParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        messageParameter.size = 46; // Set the size you want
+        messageParameter.size = (int) (titleParameter.size * 0.618); // Set the size you want
         messageFont = messageGenerator.generateFont(messageParameter);
         messageGenerator.dispose();
     }
-
-    // Other methods remain unchanged
 
     @Override
     public void render(float delta) {
@@ -64,14 +63,31 @@ public class TitleScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-        titleFont.draw(batch, "Boulder Dash", camera.viewportWidth / 2 - 100, camera.viewportHeight / 2 + 50);
-        messageFont.draw(batch, "Press SPACE to play", camera.viewportWidth / 2 - 130, camera.viewportHeight / 2 - 50);
+        float titleX = camera.viewportWidth / 2 - new GlyphLayout(titleFont, "Boulder Dash").width / 2;
+        float titleY = (float) (camera.viewportHeight * 0.55 + titleFont.getLineHeight() / 2);
+        titleFont.draw(batch, "Boulder Dash", titleX, titleY);
+
+        float messageX = camera.viewportWidth / 2 - new GlyphLayout(messageFont, "Press SPACE to play").width / 2;
+        float messageY = (float) (camera.viewportHeight * 0.45 - messageFont.getLineHeight() / 2);
+        messageFont.draw(batch, "Press SPACE to play", messageX, messageY);
 
         batch.end();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             game.setScreen(new GameScreen(game)); // Replace PlayScreen with your actual gameplay screen
         }
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        float aspectRatio = (float) width / (float) height;
+        camera.viewportWidth = aspectRatio * camera.viewportHeight;
+        camera.update();
+        stage.getViewport().update(width, height, true);
+
+        titleFont.getData().setScale(width / 800f);
+        messageFont.getData().setScale(width / 1200f);
+
     }
 
     // Other methods remain unchanged
@@ -82,6 +98,8 @@ public class TitleScreen implements Screen {
         titleFont.dispose();
         messageFont.dispose();
     }
+
+    // Other methods remain unchanged
 
     @Override
     public void pause() {
@@ -101,10 +119,5 @@ public class TitleScreen implements Screen {
     @Override
     public void resume() {
         // Implement resume logic here
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        // Implement resize logic here
     }
 }
