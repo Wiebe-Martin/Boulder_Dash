@@ -24,7 +24,8 @@ public class Stone extends Entity {
         this.cooldown = moveSpeedDown;
 
         this.texture_anm = Animator.getAnimation(texture);
-        this.currentFrame = texture_anm.getKeyFrame(stateTime, false);
+        this.currentFrame = texture_anm.getKeyFrame(1, false);
+
     }
 
     @Override

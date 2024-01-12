@@ -24,6 +24,7 @@ public class Player extends Entity {
             30, 31, 32, 33, 34, 35, 36, 37, };
 
     public boolean dead = false;
+    public boolean win = false;
 
     private int cooldown = 0;
     private int coins = 0;
@@ -83,6 +84,11 @@ public class Player extends Entity {
         }
 
         explode();
+    }
+
+    public void win() {
+        win = true;
+
     }
 
     public void handleCollison() {
