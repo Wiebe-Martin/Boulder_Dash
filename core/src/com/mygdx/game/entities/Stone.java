@@ -8,7 +8,7 @@ import com.mygdx.game.rendering.Animator;
 import java.util.ArrayList;
 
 public class Stone extends Entity {
-    protected int[] texture = {70};
+    protected int[] texture = { 70 };
 
     Animation<TextureRegion> texture_anm;
 
@@ -23,7 +23,7 @@ public class Stone extends Entity {
         super(map, startX, startY);
         this.cooldown = moveSpeedDown;
 
-        this.texture_anm = Animator.getAnimation(texture);        
+        this.texture_anm = Animator.getAnimation(texture);
         this.currentFrame = texture_anm.getKeyFrame(stateTime, false);
     }
 
@@ -34,18 +34,24 @@ public class Stone extends Entity {
     }
 
     public void handleCollision() {
-        
+
         boolean canFallLeft = isAir(tileX - 1, tileY) && isAir(tileX - 1, tileY - 1) && isStone(tileX, tileY - 1);
         boolean canFallRight = isAir(tileX + 1, tileY) && isAir(tileX + 1, tileY - 1) && isStone(tileX, tileY - 1);
-        boolean canFallDown = isAir(tileX, tileY - 1) && !isStone(tileX, tileY - 1);
-        boolean canFall = canFallLeft || canFallRight || canFallDown;
-
-        if (!canFall) {
-            return;
-        }
+        boolean canFallDown = isAir(tileX, tileY - 1);
 
         if (cooldown > 0) {
             cooldown--;
+            return;
+        }
+
+        if (!isFreeFall(tileX, tileY - 1)) {
+            falling = false;
+
+        }
+
+        if (isPlayer(tileX, tileY - 1) && falling && getPlayer().dead == false) {
+            falling = true;
+            getPlayer().kill();
             return;
         }
 
@@ -66,8 +72,6 @@ public class Stone extends Entity {
             return;
         }
 
-        falling = false;        
-        cooldown--;
     }
 
     public void move(int newTileX, int newTileY) {

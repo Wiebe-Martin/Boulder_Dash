@@ -53,7 +53,8 @@ public class Entity {
 
         if (isExploding) {
             this.currentFrame = explosion_anm.getKeyFrame(stateTime, false);
-            stateTime += Gdx.graphics.getDeltaTime() * 0.5f;
+
+            stateTime += Gdx.graphics.getDeltaTime();
             if (explosion_anm.isAnimationFinished(stateTime)) {
                 remove();
             }
@@ -97,6 +98,10 @@ public class Entity {
         return collisionLayer.getCell(x, y) == null && !isDirt(x, y) && !isStone(x, y) && !isPlayer(x, y);
     }
 
+    protected boolean isFreeFall(int x, int y) {
+        return collisionLayer.getCell(x, y) == null && !isDirt(x, y) && !isStone(x, y);
+    }
+
     protected boolean isPlayer(int tileX, int tileY) {
         for (Entity entity : entities) {
             if (entity instanceof Player) {
@@ -107,6 +112,15 @@ public class Entity {
         }
         return false;
 
+    }
+
+    protected Player getPlayer() {
+        for (Entity entity : entities) {
+            if (entity instanceof Player) {
+                return (Player) entity;
+            }
+        }
+        return null;
     }
 
     protected boolean isDirt(int x, int y) {
@@ -125,6 +139,7 @@ public class Entity {
     }
 
     public void explode() {
+        stateTime = 0;
         isExploding = true;
     }
 

@@ -76,17 +76,12 @@ public class Player extends Entity {
         }
     }
 
+    public void kill() {
+        dead = true;
+        explode();
+    }
+
     public void handleCollison() {
-        if (isStone(tileX, tileY + 1)) {
-            Stone stone = (Stone) getEntity(tileX, tileY + 1);
-
-            if (stone.isFalling()) {
-                dead = true;
-                explode();
-
-                return;
-            }
-        }
 
         boolean collision = collisionLayer.getCell(tileX, tileY) == null;
         if (collision) {
@@ -186,10 +181,6 @@ public class Player extends Entity {
             move(tileX + 1, tileY);
         }
 
-    }
-
-    public void moveStone(Stone stone, int newTileX, int newTileY) {
-        stone.move(newTileX, newTileY);
     }
 
     public int getCoins() {

@@ -63,6 +63,7 @@ public class BoulderDash {
     private void renderGaming(SpriteBatch batch, OrthographicCamera camera, float viewportWidth, float viewportHeight) {
         if (player.dead) {
             state = GameState.GAME_OVER;
+
         }
 
         renderMap(batch, camera);
