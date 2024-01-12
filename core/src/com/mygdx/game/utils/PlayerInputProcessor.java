@@ -1,5 +1,7 @@
 package com.mygdx.game.utils;
 
+import java.security.Key;
+
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Input.Keys;
 
@@ -8,6 +10,7 @@ public class PlayerInputProcessor extends InputAdapter {
     private boolean right;
     private boolean up;
     private boolean down;
+    private boolean shift;
 
     public boolean isLeft() {
         return left;
@@ -25,6 +28,10 @@ public class PlayerInputProcessor extends InputAdapter {
         return down;
     }
 
+    public boolean isShift() {
+        return shift;
+    }
+
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
@@ -39,6 +46,12 @@ public class PlayerInputProcessor extends InputAdapter {
                 break;
             case Keys.DOWN:
                 down = true;
+                break;
+            case Keys.SHIFT_LEFT:
+                shift = true;
+                break;
+            case Keys.SHIFT_RIGHT:
+                shift = true;
                 break;
         }
         return true;
@@ -58,6 +71,12 @@ public class PlayerInputProcessor extends InputAdapter {
                 break;
             case Keys.DOWN:
                 down = false;
+                break;
+            case Keys.SHIFT_LEFT:
+                shift = false;
+                break;
+            case Keys.SHIFT_RIGHT:
+                shift = false;
                 break;
         }
         return true;

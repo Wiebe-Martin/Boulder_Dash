@@ -108,18 +108,39 @@ public class Player extends Entity {
             cooldown--;
             return;
         }
+
         if (playerInputProcessor.isLeft()) {
-            move(tileX - 1, tileY);
+            if (playerInputProcessor.isShift()) {
+                removeDirt(tileX - 1, tileY);
+            } else {
+                move(tileX - 1, tileY);
+            }
         } else if (playerInputProcessor.isRight()) {
-            move(tileX + 1, tileY);
+            if (playerInputProcessor.isShift()) {
+                removeDirt(tileX + 1, tileY);
+            } else {
+                move(tileX + 1, tileY);
+            }
         } else if (playerInputProcessor.isUp()) {
-            move(tileX, tileY + 1);
+            if (playerInputProcessor.isShift()) {
+                removeDirt(tileX, tileY + 1);
+            } else {
+                move(tileX, tileY + 1);
+            }
         } else if (playerInputProcessor.isDown()) {
-            move(tileX, tileY - 1);
+            if (playerInputProcessor.isShift()) {
+                removeDirt(tileX, tileY - 1);
+            } else {
+                move(tileX, tileY - 1);
+            }
         }
-        if (playerInputProcessor.isLeft() || playerInputProcessor.isRight() || playerInputProcessor.isUp()
-                || playerInputProcessor.isDown()) {
-            cooldown = moveSpeed;
+
+        cooldown = moveSpeed;
+    }
+
+    private void removeDirt(int tileX, int tileY) {
+        if (dirtLayer.getCell(tileX, tileY) != null) {
+            dirtLayer.setCell(tileX, tileY, null);
         }
     }
 
