@@ -53,7 +53,7 @@ public class BoulderDash {
                 renderGaming(batch, camera, viewportWidth, viewportHeight);
                 break;
             case GAME_OVER:
-                // renderDeath();
+
                 renderGaming(batch, camera, viewportWidth, viewportHeight);
                 return;
 

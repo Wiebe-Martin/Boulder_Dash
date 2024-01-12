@@ -78,6 +78,10 @@ public class Player extends Entity {
 
     public void kill() {
         dead = true;
+        for (Entity entity : entities) {
+            entity.freezeMovement();
+        }
+
         explode();
     }
 

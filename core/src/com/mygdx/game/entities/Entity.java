@@ -34,6 +34,8 @@ public class Entity {
     protected boolean remove = false;
     protected boolean isExploding = false;
 
+    protected boolean freezeMovement = false;
+
     public Entity(TiledMap map, int startX, int startY) {
         this.map = map;
         this.collisionLayer = (TiledMapTileLayer) map.getLayers().get("collision");
@@ -88,7 +90,7 @@ public class Entity {
     }
 
     public void update(float deltaTime, ArrayList<Entity> entities) {
-        stateTime += Gdx.graphics.getDeltaTime();
+        // stateTime += Gdx.graphics.getDeltaTime();
 
         this.currentFrame = def_anm.getKeyFrame(stateTime, true);
         this.entities = entities;
@@ -125,6 +127,10 @@ public class Entity {
 
     protected boolean isDirt(int x, int y) {
         return dirtLayer.getCell(x, y) != null;
+    }
+
+    public void freezeMovement() {
+        freezeMovement = true;
     }
 
     protected boolean isStone(int tileX, int tileY) {
