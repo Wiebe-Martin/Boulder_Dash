@@ -7,10 +7,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.entities.Entity;
+import com.mygdx.game.entities.Explosion;
 import com.mygdx.game.entities.Player;
+import com.mygdx.game.entities.Stone;
 import com.mygdx.game.rendering.CameraController;
 import com.mygdx.game.rendering.EntityFactory;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -28,6 +31,9 @@ public class BoulderDash {
     private Player player;
     private ArrayList<Entity> entities;
     private BitmapFont font;
+    private TiledMap map;
+    private TiledMapTileLayer collisionLayer;
+    private TiledMapTileLayer dirtLayer;
 
     public BoulderDash(TiledMap tiledMap, OrthographicCamera camera, Viewport viewport) {
         this.mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
@@ -36,6 +42,9 @@ public class BoulderDash {
         this.player = getPlayer();
         font = new BitmapFont();
         font.setColor(255, 255, 255, 255);
+        this.map = tiledMap;
+        this.collisionLayer = (TiledMapTileLayer) map.getLayers().get("collision");
+        this.dirtLayer = (TiledMapTileLayer) map.getLayers().get("dirt");
     }
 
     public Player getPlayer() {
@@ -54,15 +63,75 @@ public class BoulderDash {
                 break;
             case GAME_OVER:
 
-                renderGaming(batch, camera, viewportWidth, viewportHeight);
+                renderGameOver(batch, camera, viewportWidth, viewportHeight);
                 return;
 
         }
     }
 
+    private void prepareGameOver(Player player) {
+        int tileX = player.getTileX();
+        int tileY = player.getTileY();
+
+        ArrayList<int[]> explodeLocations = new ArrayList<int[]>();
+        explodeLocations.add(new int[] { tileX - 1, tileY - 1 });
+        explodeLocations.add(new int[] { tileX, tileY - 1 });
+        explodeLocations.add(new int[] { tileX + 1, tileY - 1 });
+        explodeLocations.add(new int[] { tileX - 1, tileY });
+        explodeLocations.add(new int[] { tileX + 1, tileY });
+        explodeLocations.add(new int[] { tileX - 1, tileY + 1 });
+        explodeLocations.add(new int[] { tileX, tileY + 1 });
+        explodeLocations.add(new int[] { tileX + 1, tileY + 1 });
+
+        Iterator<Entity> iterator = entities.iterator();
+        while (iterator.hasNext()) {
+            Entity entity = iterator.next();
+            int entityX = entity.getTileX();
+            int entityY = entity.getTileY();
+
+            Iterator<int[]> explodeIterator = explodeLocations.iterator();
+            while (explodeIterator.hasNext()) {
+                int[] explodeLocation = explodeIterator.next();
+                if (entityX == explodeLocation[0] && entityY == explodeLocation[1]) {
+                    entity.explode();
+                    explodeIterator.remove();
+                }
+            }
+        }
+
+        Iterator<int[]> explodeIterator = explodeLocations.iterator();
+        while (explodeIterator.hasNext()) {
+
+            int[] explosionTile = explodeIterator.next();
+
+            if (collisionLayer.getCell(explosionTile[0], explosionTile[1]) != null) {
+                collisionLayer.setCell(explosionTile[0], explosionTile[1], null);
+            }
+            if (dirtLayer.getCell(explosionTile[0], explosionTile[1]) != null) {
+                dirtLayer.setCell(explosionTile[0], explosionTile[1], null);
+            }
+
+            entities.add(new Explosion(map, explosionTile[0], explosionTile[1]));
+
+        }
+
+    }
+
+    private void renderGameOver(SpriteBatch batch, OrthographicCamera camera, float viewportWidth,
+            float viewportHeight) {
+
+        renderMap(batch, camera);
+        renderEntities(batch);
+        renderCoinCounter(batch, camera, viewportWidth, viewportHeight);
+        renderFPSCounter(batch, camera, viewportWidth, viewportHeight);
+        updatePlayer();
+        updateCamera();
+    }
+
     private void renderGaming(SpriteBatch batch, OrthographicCamera camera, float viewportWidth, float viewportHeight) {
         if (player.dead) {
             state = GameState.GAME_OVER;
+            prepareGameOver(player);
 
         }
 
