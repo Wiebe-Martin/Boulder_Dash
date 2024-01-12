@@ -97,7 +97,15 @@ public class Entity {
     }
 
     protected boolean isAir(int x, int y) {
-        return collisionLayer.getCell(x, y) == null && !isDirt(x, y) && !isStone(x, y) && !isPlayer(x, y);
+        for (Entity entity : entities) {
+
+            if (entity.getTileX() == x && entity.getTileY() == y) {
+                return false;
+            }
+
+        }
+
+        return collisionLayer.getCell(x, y) == null && dirtLayer.getCell(x, y) == null;
     }
 
     protected boolean isFreeFall(int x, int y) {
