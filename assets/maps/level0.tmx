@@ -91,6 +91,5 @@
   <object id="136" gid="71" x="576" y="192" width="32" height="32"/>
   <object id="137" gid="71" x="672" y="96" width="32" height="32"/>
   <object id="138" gid="62" x="800" y="128" width="32" height="32"/>
-  <object id="139" gid="91" x="576" y="448" width="32" height="32"/>
  </objectgroup>
 </map>

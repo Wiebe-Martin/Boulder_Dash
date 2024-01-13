@@ -27,7 +27,7 @@ public class GameScreen extends ScreenAdapter {
     private int viewportHeight = 600;
 
     private ArrayList<String> levelNames = new ArrayList<>();
-    private int currentLevel = 0;
+    private int currentLevel = 1;
     private int gameOverCooldown = 40;
 
     private int gameOverCooldownCounter = gameOverCooldown;
