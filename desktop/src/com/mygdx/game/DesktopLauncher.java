@@ -9,7 +9,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setWindowedMode(640, 360);
 
-		config.setForegroundFPS(30);
+		config.setForegroundFPS(60);
 		config.setTitle("Boulder Dash");
 		new Lwjgl3Application(new MyGdxGameTest(), config);
 	}

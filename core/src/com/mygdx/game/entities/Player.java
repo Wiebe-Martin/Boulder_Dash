@@ -14,9 +14,9 @@ public class Player extends Entity {
 
     PlayerInputProcessor playerInputProcessor;
 
-    private int moveSpeed = 5;
-    private int waitStandingStillTime = 10;
-    private int stoneMoveThreshold = 40;
+    private int moveSpeed = 10;
+    private int waitStandingStillTime = 20;
+    private int stoneMoveThreshold = 80;
     private int[] walk_left = { 40, 41, 42, 43, 44, 45, 46, 47 };
     private int[] walk_right = { 50, 51, 52, 53, 54, 55, 56, 57 };
     private int[] standing = { 10, 11, 12, 13, 14, 15, 16, 17,
@@ -55,7 +55,6 @@ public class Player extends Entity {
             return;
         }
 
-        handleCollison();
         handleInput();
         handleAnimation();
         handleStoneMoving();
@@ -75,6 +74,8 @@ public class Player extends Entity {
             this.x = tileX * collisionLayer.getTileWidth();
             this.y = tileY * collisionLayer.getTileHeight();
         }
+
+        handleCollison();
     }
 
     public void kill() {
@@ -92,7 +93,6 @@ public class Player extends Entity {
     }
 
     public void handleCollison() {
-
         boolean collision = collisionLayer.getCell(tileX, tileY) == null;
         if (collision) {
             // Modify the map data (e.g., set the tile to null or update properties)
@@ -102,9 +102,9 @@ public class Player extends Entity {
         Iterator<Entity> iterator1 = entities.iterator();
         while (iterator1.hasNext()) {
             Entity entity = iterator1.next();
-            if (entity instanceof Coin && entity.getTileX() == tileX && entity.getTileY() == tileY) {
-                coins++;
+            if (entity instanceof Coin && entity.getTileX() == tileX && entity.getTileY() == tileY) {               
                 entity.remove();
+                coins++;
             }
         }
     }

@@ -109,7 +109,17 @@ public class Entity {
     }
 
     protected boolean isFreeFall(int x, int y) {
-        return collisionLayer.getCell(x, y) == null && !isDirt(x, y) && !isStone(x, y);
+        for (Entity entity : entities) {
+
+            if(entity instanceof Stone || entity instanceof EndPortal || entity instanceof Coin) {
+                if (entity.getTileX() == x && entity.getTileY() == y) {
+                    return false;
+                }
+            }
+
+        }
+
+        return collisionLayer.getCell(x, y) == null && dirtLayer.getCell(x, y) == null;
     }
 
     protected boolean isPlayer(int tileX, int tileY) {

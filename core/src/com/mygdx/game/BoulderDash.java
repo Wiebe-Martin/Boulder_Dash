@@ -22,7 +22,8 @@ public class BoulderDash {
 
     public enum GameState {
         GAMING,
-        GAME_OVER
+        GAME_OVER,
+        GAME_WIN
     }
 
     private GameState state = GameState.GAMING;
@@ -65,6 +66,10 @@ public class BoulderDash {
 
                 renderGameOver(batch, camera, viewportWidth, viewportHeight);
                 return;
+
+            case GAME_WIN:
+                System.out.println("You win!");
+            return;
 
         }
     }

@@ -34,7 +34,7 @@ public class GameScreen extends ScreenAdapter {
         viewport.apply(true);
 
         // Lade die Tiled-Map
-        tiledMap = new TmxMapLoader().load("maps/map2.tmx");
+        tiledMap = new TmxMapLoader().load("maps/map3.tmx");
 
         boulderDash = new BoulderDash(tiledMap, camera, viewport);
     }
