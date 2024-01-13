@@ -25,15 +25,5 @@ public class EndPortal extends Entity {
 
     public void render(SpriteBatch batch) {
         batch.draw(currentFrame, x, y);
-    }
-
-    public void update(float delta) {
-        Player player = getPlayer();
-
-       if (!isActivated && player.getTileX() == getTileX() && player.getTileY() == getTileY()) {
-              isActivated = true;
-              player.win();
-         }
-    
-    }
+    } 
 }

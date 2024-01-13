@@ -1,13 +1,15 @@
 package com.mygdx.game.screens;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.BoulderDash;
 import com.mygdx.game.MyGdxGameTest;
@@ -21,17 +23,25 @@ public class GameScreen extends ScreenAdapter {
 
     private BoulderDash boulderDash;
 
-    private int viewportWidth = 640; // Ändere die gewünschte Viewport-Breite
-    private int viewportHeight = 360;
+    private int viewportWidth = 800; // Ändere die gewünschte Viewport-Breite
+    private int viewportHeight = 600;
+
+    private ArrayList<String> levelNames = new ArrayList<>();
+    private int currentLevel = 0;
+    private int gameOverCooldown = 40;
+
+    private int gameOverCooldownCounter = gameOverCooldown;
 
     public GameScreen(MyGdxGameTest game) {
         this.game = game;
-
+        levelNames.add("level0");
+        levelNames.add("level1");
+        levelNames.add("level2");
         // Initialisiere Kamera und Viewport
         camera = new OrthographicCamera();
         viewport = new ExtendViewport(viewportWidth, viewportHeight, camera);
 
-        resetGame();
+        resetGame(levelNames.get(currentLevel));
     }
 
     @Override
@@ -42,6 +52,8 @@ public class GameScreen extends ScreenAdapter {
 
         game.batch.begin();
 
+        update();
+
         // Setze die Projektionsmatrix auf den Batch
         game.batch.setProjectionMatrix(camera.combined);
 
@@ -50,18 +62,43 @@ public class GameScreen extends ScreenAdapter {
         game.batch.end();
     }
 
+    public void update() {
+        if (boulderDash.getState() == BoulderDash.GameState.GAME_WIN) {
+            System.out.println("Loading new level!");
+            currentLevel++;
+            if (currentLevel >= levelNames.size()) {
+                currentLevel = 1;
+            }
+            loadLevel(levelNames.get(currentLevel));
+        }
+
+        if (boulderDash.getState() == BoulderDash.GameState.GAME_OVER) {
+            
+            if (gameOverCooldownCounter > 0) {
+                gameOverCooldownCounter--;
+                return;
+            }
+            gameOverCooldownCounter = gameOverCooldown; 
+            loadLevel(levelNames.get(currentLevel));
+        }
+    }
+
     @Override
     public void show() {
 
     }
 
-    public void resetGame() {
+    public void resetGame(String levelName) {
         viewport.apply(true);
 
         // Lade die Tiled-Map
-        tiledMap = new TmxMapLoader().load("maps/level1.tmx");
+        tiledMap = new TmxMapLoader().load("maps/" + levelName + ".tmx");
 
         boulderDash = new BoulderDash(tiledMap, camera, viewport);
+    }
+
+    public void loadLevel(String levelName) {
+        resetGame(levelName);
     }
 
     @Override

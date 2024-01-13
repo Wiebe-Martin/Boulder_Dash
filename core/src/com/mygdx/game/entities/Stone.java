@@ -44,8 +44,8 @@ public class Stone extends Entity {
         }
 
 
-        boolean canFallLeft = isAir(tileX - 1, tileY) && isAir(tileX - 1, tileY - 1) && isStone(tileX, tileY - 1);
-        boolean canFallRight = isAir(tileX + 1, tileY) && isAir(tileX + 1, tileY - 1) && isStone(tileX, tileY - 1);
+        boolean canFallLeft = isAir(tileX - 1, tileY) && isAir(tileX - 1, tileY - 1) && (isStone(tileX, tileY - 1) || isWall(tileX, tileY - 1));
+        boolean canFallRight = isAir(tileX + 1, tileY) && isAir(tileX + 1, tileY - 1) && (isStone(tileX, tileY - 1) || isWall(tileX, tileY - 1));
         boolean canFallDown = isAir(tileX, tileY - 1);
         boolean canFall = canFallLeft || canFallRight || canFallDown;
 

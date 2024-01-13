@@ -134,6 +134,33 @@ public class Entity {
 
     }
 
+    protected boolean isCoin(int tileX, int tileY) {
+        for (Entity entity : entities) {
+            if (entity instanceof Coin) {
+                if (entity.getTileX() == tileX && entity.getTileY() == tileY) {
+                    return true;
+                }
+            }
+        }
+        return false;
+
+    }
+
+    protected boolean isWall(int x, int y) {
+        return collisionLayer.getCell(x, y) != null;
+    }
+
+    protected boolean isEndPortal(int x, int y) {
+        for (Entity entity : entities) {
+            if (entity instanceof EndPortal) {
+                if (entity.getTileX() == x && entity.getTileY() == y) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     protected Player getPlayer() {
         for (Entity entity : entities) {
             if (entity instanceof Player) {

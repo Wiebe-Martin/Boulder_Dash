@@ -26,9 +26,7 @@ public class BoulderDash {
     public enum GameState {
         GAMING,
         GAME_OVER,
-        GAME_WIN,
-        LEVEL_RESET,
-        LEVEL_NEXT
+        GAME_WIN
     }
 
     private GameState state = GameState.GAMING;
@@ -42,7 +40,7 @@ public class BoulderDash {
     private TiledMapTileLayer dirtLayer;
 
     private int maxCoins = 0;
-    private int countdown = 60;
+    private int countdown = 120;
 
     public BoulderDash(TiledMap tiledMap, OrthographicCamera camera, Viewport viewport) {
         this.mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
@@ -79,12 +77,12 @@ public class BoulderDash {
                 renderGaming(batch, camera, viewportWidth, viewportHeight);
                 break;
             case GAME_OVER:
-
                 renderGameOver(batch, camera, viewportWidth, viewportHeight);
                 return;
 
             case GAME_WIN:
-                System.out.println("You win!");
+                //System.out.println("You win!");
+                //nextLevel();
                 return;
 
         }
@@ -150,11 +148,28 @@ public class BoulderDash {
 
     }
 
+    private float countdownTimer = 1.0f; // Countdown timer in seconds
+    private float elapsedTime = 0.0f; // Elapsed time since last countdown update
+
     private void renderGaming(SpriteBatch batch, OrthographicCamera camera, float viewportWidth, float viewportHeight) {
         if (player.dead) {
             state = GameState.GAME_OVER;
             prepareGameOver(player);
+        }
 
+        if (player.getCoins() == maxCoins && countdown > 0 && !player.dead && player.isBase()) {
+            state = GameState.GAME_WIN;
+        }
+
+        elapsedTime += Gdx.graphics.getDeltaTime();
+        if (elapsedTime >= countdownTimer) {
+            elapsedTime -= countdownTimer;
+            if (countdown > 0) {
+                countdown--;
+            } else {
+                player.explode();
+                state = GameState.GAME_OVER;
+            }
         }
 
         renderMap(batch, camera);
@@ -196,8 +211,8 @@ public class BoulderDash {
     private void renderCountdown(SpriteBatch batch, OrthographicCamera camera, float viewportWidth,
             float viewportHeight) {
         float coinX = camera.position.x - viewportWidth / 2 + 10;
-        float coinY = camera.position.y + viewportHeight / 2 - 30;
-        font.draw(batch, ("Zeit verbleibend:"), coinX, coinY);
+        float coinY = camera.position.y + viewportHeight / 2 - 50;
+        font.draw(batch, ("Zeit verbleibend:" + countdown), coinX, coinY);
     }
 
     private void renderFPSCounter(SpriteBatch batch, OrthographicCamera camera, float viewportWidth,
