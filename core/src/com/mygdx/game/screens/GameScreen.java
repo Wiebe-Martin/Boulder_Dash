@@ -31,17 +31,7 @@ public class GameScreen extends ScreenAdapter {
         camera = new OrthographicCamera();
         viewport = new ExtendViewport(viewportWidth, viewportHeight, camera);
 
-        viewport.apply(true);
-
-        // Lade die Tiled-Map
-        tiledMap = new TmxMapLoader().load("maps/map3.tmx");
-
-        boulderDash = new BoulderDash(tiledMap, camera, viewport);
-    }
-
-    @Override
-    public void show() {
-
+        resetGame();
     }
 
     @Override
@@ -61,10 +51,25 @@ public class GameScreen extends ScreenAdapter {
     }
 
     @Override
+    public void show() {
+
+    }
+
+    public void resetGame() {
+        viewport.apply(true);
+
+        // Lade die Tiled-Map
+        tiledMap = new TmxMapLoader().load("maps/level1.tmx");
+
+        boulderDash = new BoulderDash(tiledMap, camera, viewport);
+    }
+
+    @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
-        viewportHeight = height;
-        viewportWidth = width;
+        float aspectRatio = (float) width / (float) height;
+        camera.viewportWidth = aspectRatio * camera.viewportHeight;
+        camera.update();
+        viewport.update(width, height, true);
     }
 
     @Override

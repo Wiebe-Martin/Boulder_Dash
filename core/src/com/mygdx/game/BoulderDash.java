@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.entities.Coin;
 import com.mygdx.game.entities.Entity;
 import com.mygdx.game.entities.Explosion;
 import com.mygdx.game.entities.Player;
@@ -17,13 +19,16 @@ import com.mygdx.game.entities.Stone;
 import com.mygdx.game.rendering.CameraController;
 import com.mygdx.game.rendering.EntityFactory;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
 public class BoulderDash {
 
     public enum GameState {
         GAMING,
         GAME_OVER,
-        GAME_WIN
+        GAME_WIN,
+        LEVEL_RESET,
+        LEVEL_NEXT
     }
 
     private GameState state = GameState.GAMING;
@@ -36,6 +41,9 @@ public class BoulderDash {
     private TiledMapTileLayer collisionLayer;
     private TiledMapTileLayer dirtLayer;
 
+    private int maxCoins = 0;
+    private int countdown = 60;
+
     public BoulderDash(TiledMap tiledMap, OrthographicCamera camera, Viewport viewport) {
         this.mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         this.entities = EntityFactory.createEntities(tiledMap);
@@ -46,6 +54,14 @@ public class BoulderDash {
         this.map = tiledMap;
         this.collisionLayer = (TiledMapTileLayer) map.getLayers().get("collision");
         this.dirtLayer = (TiledMapTileLayer) map.getLayers().get("dirt");
+
+        // get how manny coins are in the entities list
+
+        for (Entity entity : entities) {
+            if (entity instanceof Coin) {
+                maxCoins++;
+            }
+        }
     }
 
     public Player getPlayer() {
@@ -69,7 +85,7 @@ public class BoulderDash {
 
             case GAME_WIN:
                 System.out.println("You win!");
-            return;
+                return;
 
         }
     }
@@ -131,6 +147,7 @@ public class BoulderDash {
         renderFPSCounter(batch, camera, viewportWidth, viewportHeight);
         updatePlayer();
         updateCamera();
+
     }
 
     private void renderGaming(SpriteBatch batch, OrthographicCamera camera, float viewportWidth, float viewportHeight) {
@@ -144,6 +161,7 @@ public class BoulderDash {
         renderEntities(batch);
         renderCoinCounter(batch, camera, viewportWidth, viewportHeight);
         renderFPSCounter(batch, camera, viewportWidth, viewportHeight);
+        renderCountdown(batch, camera, viewportWidth, viewportHeight);
         updatePlayer();
         updateCamera();
     }
@@ -171,7 +189,15 @@ public class BoulderDash {
             float viewportHeight) {
         float coinX = camera.position.x - viewportWidth / 2 + 10;
         float coinY = camera.position.y + viewportHeight / 2 - 30;
-        font.draw(batch, "Coins: " + player.getCoins(), coinX, coinY);
+
+        font.draw(batch, ("Coins: " + player.getCoins() + " / " + maxCoins), coinX, coinY);
+    }
+
+    private void renderCountdown(SpriteBatch batch, OrthographicCamera camera, float viewportWidth,
+            float viewportHeight) {
+        float coinX = camera.position.x - viewportWidth / 2 + 10;
+        float coinY = camera.position.y + viewportHeight / 2 - 30;
+        font.draw(batch, ("Zeit verbleibend:"), coinX, coinY);
     }
 
     private void renderFPSCounter(SpriteBatch batch, OrthographicCamera camera, float viewportWidth,
@@ -179,6 +205,10 @@ public class BoulderDash {
         float fpsX = camera.position.x - viewportWidth / 2 + 10;
         float fpsY = camera.position.y + viewportHeight / 2 - 10;
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), fpsX, fpsY);
+    }
+
+    public GameState getState() {
+        return state;
     }
 
     private void updatePlayer() {
