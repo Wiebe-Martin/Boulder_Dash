@@ -16,6 +16,7 @@ public class EntityFactory {
         // hier werden die gid's den jeweiligen Klassen zugeordnet
         entityFactoryMap.put(1, Player::new);
         entityFactoryMap.put(71, Stone::new);
+        entityFactoryMap.put(62, EndPortal::new);
         entityFactoryMap.put(101, Coin::new);
     }
 
@@ -52,11 +53,10 @@ public class EntityFactory {
     }
 
     // private static class DefaultEntity implements Entity {
-    //     // Default implementation or fallback if no specific entity is found
-    //     // You might want to customize this based on your needs
-    //     public DefaultEntity(TiledMap tiledMap, int x, int y) {
-    //         // Your default entity constructor logic
-    //     }
+    // // Default implementation or fallback if no specific entity is found
+    // // You might want to customize this based on your needs
+    // public DefaultEntity(TiledMap tiledMap, int x, int y) {
+    // // Your default entity constructor logic
+    // }
     // }
 }
-

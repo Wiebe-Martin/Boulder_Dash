@@ -12,10 +12,13 @@ public class Stone extends Entity {
 
     Animation<TextureRegion> texture_anm;
 
-    private int moveSpeedDown = 6;
-    private int moveSpeedSide = 8;
+
+    private int startCooldown = 20;
+    private int moveSpeedDown = 20;
+    private int moveSpeedSide = 25;
 
     private int cooldown;
+    private int startCooldownDownCounter = startCooldown;
 
     private boolean falling;
 
@@ -24,7 +27,8 @@ public class Stone extends Entity {
         this.cooldown = moveSpeedDown;
 
         this.texture_anm = Animator.getAnimation(texture);
-        this.currentFrame = texture_anm.getKeyFrame(stateTime, false);
+        this.currentFrame = texture_anm.getKeyFrame(1, false);
+
     }
 
     @Override
@@ -39,9 +43,16 @@ public class Stone extends Entity {
             return;
         }
 
+
         boolean canFallLeft = isAir(tileX - 1, tileY) && isAir(tileX - 1, tileY - 1) && isStone(tileX, tileY - 1);
         boolean canFallRight = isAir(tileX + 1, tileY) && isAir(tileX + 1, tileY - 1) && isStone(tileX, tileY - 1);
         boolean canFallDown = isAir(tileX, tileY - 1);
+        boolean canFall = canFallLeft || canFallRight || canFallDown;
+
+        if (startCooldownDownCounter > 0 && canFall && !falling) {
+            startCooldownDownCounter--;
+            return;
+        }
 
         if (cooldown > 0) {
             cooldown--;
@@ -50,6 +61,7 @@ public class Stone extends Entity {
 
         if (!isFreeFall(tileX, tileY - 1)) {
             falling = false;
+            startCooldownDownCounter = startCooldown;
 
         }
 
