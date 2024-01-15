@@ -27,16 +27,17 @@ public class GameScreen extends ScreenAdapter {
     private int viewportHeight = 600;
 
     private ArrayList<String> levelNames = new ArrayList<>();
-    private int currentLevel = 0;
+    private int currentLevel = 3;
     private int gameOverCooldown = 40;
 
     private int gameOverCooldownCounter = gameOverCooldown;
 
     public GameScreen(MyGdxGameTest game) {
         this.game = game;
-        levelNames.add("level0");
+        levelNames.add("devlevel");
         levelNames.add("level1");
         levelNames.add("level2");
+        levelNames.add("level3");
         // Initialisiere Kamera und Viewport
         camera = new OrthographicCamera();
         viewport = new ExtendViewport(viewportWidth, viewportHeight, camera);
@@ -73,12 +74,12 @@ public class GameScreen extends ScreenAdapter {
         }
 
         if (boulderDash.getState() == BoulderDash.GameState.GAME_OVER) {
-            
+
             if (gameOverCooldownCounter > 0) {
                 gameOverCooldownCounter--;
                 return;
             }
-            gameOverCooldownCounter = gameOverCooldown; 
+            gameOverCooldownCounter = gameOverCooldown;
             loadLevel(levelNames.get(currentLevel));
         }
     }
