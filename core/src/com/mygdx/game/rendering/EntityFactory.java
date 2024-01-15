@@ -17,6 +17,7 @@ public class EntityFactory {
         entityFactoryMap.put(1, Player::new);
         entityFactoryMap.put(71, Stone::new);
         entityFactoryMap.put(62, EndPortal::new);
+        entityFactoryMap.put(91, Firefly::new);
         entityFactoryMap.put(101, Coin::new);
     }
 
