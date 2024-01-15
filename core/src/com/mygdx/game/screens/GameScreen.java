@@ -113,4 +113,10 @@ public class GameScreen extends ScreenAdapter {
     public void hide() {
         Gdx.input.setInputProcessor(null);
     }
+
+    @Override
+    public void dispose() {
+        tiledMap.dispose();
+        boulderDash.dispose();
+    }
 }

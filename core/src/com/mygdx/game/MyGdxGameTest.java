@@ -21,6 +21,7 @@ public class MyGdxGameTest extends Game {
     public void dispose() {
         // Gib Ressourcen frei, wenn das Spiel beendet wird
         batch.dispose();
+        font.dispose();
     }
 
 }

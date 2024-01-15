@@ -236,5 +236,9 @@ public class BoulderDash {
 
     public void dispose() {
         mapRenderer.dispose();
+        font.dispose();
+        map.dispose();
+        collisionLayer.dispose();
+        dirtLayer.dispose();
     }
 }

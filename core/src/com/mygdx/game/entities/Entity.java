@@ -206,5 +206,13 @@ public class Entity {
 
     public void handleCollison() {
         System.out.println(getTileX() + "/" + getTileY());
-    };
+    }
+
+    @Override
+    public void dispose() {
+        map.dispose();
+        collisionLayer.dispose();
+        dirtLayer.dispose();
+    }
 }
+
