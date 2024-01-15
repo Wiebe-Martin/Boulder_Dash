@@ -40,19 +40,19 @@ public class TitleScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         // Load your custom fonts here
-        FreeTypeFontGenerator titleGenerator = new FreeTypeFontGenerator(
-                Gdx.files.internal("fonts/RubikGlitch-Regular.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter titleParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        titleParameter.size = 82; // Set the size you want
-        titleFont = titleGenerator.generateFont(titleParameter);
-        titleGenerator.dispose();
+        //FreeTypeFontGenerator titleGenerator = new FreeTypeFontGenerator(
+        //        Gdx.files.internal("fonts/RubikGlitch-Regular.ttf"));
+        //FreeTypeFontGenerator.FreeTypeFontParameter titleParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        //titleParameter.size = 82; // Set the size you want
+        //titleFont = titleGenerator.generateFont(titleParameter);
+        //titleGenerator.dispose();
 
-        FreeTypeFontGenerator messageGenerator = new FreeTypeFontGenerator(
-                Gdx.files.internal("fonts/CutiveMono-Regular.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter messageParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        messageParameter.size = (int) (titleParameter.size * 0.618); // Set the size you want
-        messageFont = messageGenerator.generateFont(messageParameter);
-        messageGenerator.dispose();
+        //FreeTypeFontGenerator messageGenerator = new FreeTypeFontGenerator(
+        //        Gdx.files.internal("fonts/CutiveMono-Regular.ttf"));
+        //FreeTypeFontGenerator.FreeTypeFontParameter messageParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        //messageParameter.size = (int) (titleParameter.size * 0.618); // Set the size you want
+        //messageFont = messageGenerator.generateFont(messageParameter);
+        //messageGenerator.dispose();
     }
 
     private float opacity = 1f;

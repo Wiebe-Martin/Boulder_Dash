@@ -66,26 +66,52 @@ public class Firefly extends Entity {
                         break;
                     }
                     break;
-                    case DOWN:
-                        if (isAir(tileX, tileY - 1)) {
-                            move(tileX, tileY - 1);
-                        } else {
-                            direction = Direction.LEFT;
-                        }   
+
+                case DOWN:
+                    if(!isAir(tileX, tileY - 1) && !isAir(tileX + 1, tileY)) {
+                        direction = Direction.LEFT;
                         break;
-                    break;
-                case LEFT:
-                    if (isAir(tileX - 1, tileY)) {
-                        move(tileX - 1, tileY);
-                    } else {
-                        direction = Direction.UP;
+                    }
+        
+                    if(!isAir(tileX + 1, tileY) && isAir(tileX, tileY - 1)) {
+                        move(tileX, tileY - 1);
+                        break;
+                    }   
+                    if(!isAir(tileX + 1, tileY + 1)) {
+                        move(tileX + 1, tileY);
+                        break;
                     }
                     break;
+
+                case LEFT:
+                    if(!isAir(tileX, tileY - 1) && !isAir(tileX - 1, tileY)) {
+                        direction = Direction.UP;
+                        break;
+                    }
+    
+                    if(!isAir(tileX, tileY - 1) && isAir(tileX - 1, tileY)) {
+                        move(tileX - 1, tileY);
+                        break;
+                    }   
+                    if(!isAir(tileX + 1, tileY - 1)) {
+                        move(tileX, tileY - 1);
+                        break;
+                    }
+                    break;
+
                 case RIGHT:
-                    if (isAir(tileX + 1, tileY)) {
-                        move(tileX + 1, tileY);
-                    } else {
+                    if(!isAir(tileX, tileY + 1) && !isAir(tileX + 1, tileY)) {
                         direction = Direction.DOWN;
+                        break;
+                    }
+    
+                    if(!isAir(tileX, tileY + 1) && isAir(tileX + 1, tileY)) {
+                        move(tileX, tileY + 1);
+                        break;
+                    }   
+                    if(!isAir(tileX - 1, tileY + 1)) {
+                        move(tileX, tileY + 1);
+                        break;
                     }
                     break;
             }
@@ -120,16 +146,16 @@ public class Firefly extends Entity {
     public void moveUp() {
         if(!isAir(tileX, tileY + 1) && !isAir(tileX - 1, tileY)) {
             direction = Direction.RIGHT;
-            break;
+            return;
         }
 
         if(!isAir(tileX - 1, tileY) && isAir(tileX, tileY + 1)) {
             move(tileX, tileY + 1);
-            break;
+            return;
         }
         if(!isAir(tileX - 1, tileY - 1)) {
             move(tileX - 1, tileY);
-            break;
+            return;
         }
     }
 
