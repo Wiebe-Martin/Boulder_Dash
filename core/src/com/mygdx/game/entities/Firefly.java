@@ -52,18 +52,27 @@ public class Firefly extends Entity {
             System.out.println(direction);
             switch (direction) {
                 case UP:
-                    if (isAir(tileX, tileY + 1)) {
-                        move(tileX, tileY + 1);
-                    } else {
+                    if(!isAir(tileX, tileY + 1) && !isAir(tileX - 1, tileY)) {
                         direction = Direction.RIGHT;
+                        break;
+                    }
+        
+                    if(!isAir(tileX - 1, tileY) && isAir(tileX, tileY + 1)) {
+                        move(tileX, tileY + 1);
+                        break;
+                    }   
+                    if(!isAir(tileX - 1, tileY - 1)) {
+                        move(tileX - 1, tileY);
+                        break;
                     }
                     break;
-                case DOWN:
-                    if (isAir(tileX, tileY - 1)) {
-                        move(tileX, tileY - 1);
-                    } else {
-                        direction = Direction.LEFT;
-                    }
+                    case DOWN:
+                        if (isAir(tileX, tileY - 1)) {
+                            move(tileX, tileY - 1);
+                        } else {
+                            direction = Direction.LEFT;
+                        }   
+                        break;
                     break;
                 case LEFT:
                     if (isAir(tileX - 1, tileY)) {
@@ -83,6 +92,44 @@ public class Firefly extends Entity {
             movementCooldownTimer = MOVEMENT_COOLDOWN;
         } else {
             movementCooldownTimer -= delta; // Assuming delta is the time since the last update
+        }
+    }
+
+    public void changeDirection() {
+        switch(direction) {
+            case UP:
+                direction = Direction.RIGHT;
+                break;
+            case RIGHT:
+                direction = Direction.DOWN;
+                break;
+            case DOWN:
+                direction = Direction.LEFT;
+                break;
+            case LEFT:
+                direction = Direction.UP;
+                break;
+
+        }
+    }
+
+    public void handleMovement(Direction direction) {
+
+    }
+
+    public void moveUp() {
+        if(!isAir(tileX, tileY + 1) && !isAir(tileX - 1, tileY)) {
+            direction = Direction.RIGHT;
+            break;
+        }
+
+        if(!isAir(tileX - 1, tileY) && isAir(tileX, tileY + 1)) {
+            move(tileX, tileY + 1);
+            break;
+        }
+        if(!isAir(tileX - 1, tileY - 1)) {
+            move(tileX - 1, tileY);
+            break;
         }
     }
 
