@@ -112,6 +112,7 @@ public class TitleScreen implements Screen {
         stage.dispose();
         titleFont.dispose();
         messageFont.dispose();
+        batch.dispose();
     }
 
     // Other methods remain unchanged

@@ -111,7 +111,7 @@ public class Entity {
     protected boolean isFreeFall(int x, int y) {
         for (Entity entity : entities) {
 
-            if(entity instanceof Stone || entity instanceof EndPortal || entity instanceof Coin) {
+            if (entity instanceof Stone || entity instanceof EndPortal || entity instanceof Coin) {
                 if (entity.getTileX() == x && entity.getTileY() == y) {
                     return false;
                 }
@@ -206,5 +206,12 @@ public class Entity {
 
     public void handleCollison() {
         System.out.println(getTileX() + "/" + getTileY());
-    };
+    }
+
+    @Override
+    public void dispose() {
+        map.dispose();
+        collisionLayer.dispose();
+        dirtLayer.dispose();
+    }
 }

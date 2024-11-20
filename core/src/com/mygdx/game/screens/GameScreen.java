@@ -73,12 +73,12 @@ public class GameScreen extends ScreenAdapter {
         }
 
         if (boulderDash.getState() == BoulderDash.GameState.GAME_OVER) {
-            
+
             if (gameOverCooldownCounter > 0) {
                 gameOverCooldownCounter--;
                 return;
             }
-            gameOverCooldownCounter = gameOverCooldown; 
+            gameOverCooldownCounter = gameOverCooldown;
             loadLevel(levelNames.get(currentLevel));
         }
     }
@@ -112,5 +112,11 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
+    }
+
+    @Override
+    public void dispose() {
+        tiledMap.dispose();
+        boulderDash.dispose();
     }
 }

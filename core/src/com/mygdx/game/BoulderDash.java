@@ -81,8 +81,8 @@ public class BoulderDash {
                 return;
 
             case GAME_WIN:
-                //System.out.println("You win!");
-                //nextLevel();
+                // System.out.println("You win!");
+                // nextLevel();
                 return;
 
         }
@@ -236,5 +236,9 @@ public class BoulderDash {
 
     public void dispose() {
         mapRenderer.dispose();
+        font.dispose();
+        map.dispose();
+        collisionLayer.dispose();
+        dirtLayer.dispose();
     }
 }
